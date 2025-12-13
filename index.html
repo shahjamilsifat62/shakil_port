@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD. SHAH JALAL MIA | Professional Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons (type="module" removed for better compatibility) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Define color variables for both themes */
+        :root {
+            /* Dark Mode Defaults */
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --card-bg: #161b22;
+            --border-color: #dfe2e7;
+            --dot-color: #4b4ef3;
+            --dot-border: #92beff;
+        }
+
+        body.light-mode {
+            /* Light Mode Overrides */
+            --bg-color: #EAF6FF; /* Light gray background */
+            --text-color: #1F3B57; /* Dark text */
+            --card-bg: #ffffff; /* White card background */
+            --border-color: #4b5054; /* Light gray border */
+            --dot-border: #8e8e90; /* Matches light background */
+        }
+
+        /* Apply CSS variables universally */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            /* ADDED: Smooth scrolling for better UX */
+            scroll-behavior: smooth;
+            transition: background-color 0.6s ease, color 0.4s ease;
+        }
+          /* ADDED: Ensures body overflow is hidden when mobile menu is open */
+        body.menu-open {
+            overflow: hidden;
+        }
+        
+       
+        /* --- HIGHLIGHT: থিম বাটনকে গোলাকার করার জন্য CSS পরিবর্তন --- */
+        #theme-toggle-desktop, #theme-toggle-mobile {
+            /* HIGHLIGHT: বাটনটিকে নিখুঁত বৃত্ত (perfect circle) তৈরি করা হয়েছে */
+            width: 36px;
+            height: 36px;
+            position: relative;
+            background-color: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 50%; /* HIGHLIGHT: বৃত্তাকার শেপ */
+            padding: 0; 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+        }
+
+        /* HIGHLIGHT: পুরানো ব্যাকগ্রাউন্ড কালার এবং ট্রান্সলেশনাল স্টাইলগুলি মুছে ফেলা হয়েছে */
+        body:not(.light-mode) #theme-toggle-desktop,
+        body:not(.light-mode) #theme-toggle-mobile {
+            background-color: var(--card-bg);
+        }
+        
+        .switch-icon-container {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: none; /* নো ট্রান্সলেশন ট্রানজিশন */
+        }
+        
+        .switch-icon-container.light,
+        body:not(.light-mode) .switch-icon-container {
+            transform: none;
+            background-color: transparent;
+        }
+        
+        /* Ensure icon size is correct */
+        .switch-icon-container i {
+             width: 20px;
+             height: 20px;
+        }
+
+
+        /* HIGHLIGHT: বাউন্স সহ আইকনের জন্য নতুন রোটেশন অ্যানিমেশন */
+        @keyframes spin-360 {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(0.8); opacity: 0.7; } /* মাঝখানে বাউন্স */
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .switch-icon-container.spin-active {
+            /* HIGHLIGHT: বাউন্সি রোটেশন ট্রানজিশন যোগ করা হয়েছে */
+            animation: spin-360 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+        }
+        /* Animation for the button click feedback */
+        @keyframes toggle-pulse-spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.15); border-color: #3B82F6; } 
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .animating-toggle {
+            animation: toggle-pulse-spin 0.6s ease-in-out;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
+        }
+        /* ------------------------------------- */
+
+        /* Custom CSS for scroll animation effects */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transition-delay: var(--delay, 0s);
+        }
+        .scroll-reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom glow effect on buttons/cards - Color depends on theme, background uses variable */
+        .card-glow {
+            background-color: var(--card-bg);
+            transition: all 0.3s ease;
+        }
+        .card-glow:hover {
+            transform: translateY(-2px);
+            /* Dark Mode Glow */
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.1);
+        }
+        
+        body.light-mode .card-glow:hover {
+            /* Light Mode Glow */
+            box-shadow: 0 10px 15px -3px rgba(5, 82, 248, 0.433), 0 4px 6px -2px rgba(37, 99, 235, 0.08);
+        }
+
+        .gradient-text {
+            background-image: linear-gradient(to right, #6EE7B7, #3B82F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom styling for timeline dots/lines using variables */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border-color);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--dot-color); /* Blue dot */
+            border: 3px solid var(--dot-border);
+        }
+
+        /* Sticky header background using variable */
+        .header-bg {
+            background-color: var(--bg-color);
+        }
+
+        /* --- Circular FAB and Text Styling --- */
+        .circular-fab {
+            /* Define overall container size (Diameter of the text circle) */
+            width: 150px;
+            height: 150px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Inner rotating text wrapper */
+        #circular-text-display {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* Animation for continuous slow spin */
+            animation: rotate 15s linear infinite;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Individual letter positioning */
+        #circular-text-display span {
+            position: absolute;
+            left: 50%;
+            /* Center of rotation (75px is the radius of the 150px container) */
+            transform-origin: 0 75px; 
+            height: 75px; /* Radius */
+            top: 0;
+            padding-left: 2px; /* Slight spacing between characters */
+            font-weight: 700;
+        }
+        
+        /* Keyframes for rotation */
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Main 'Hire Me' button styling (FAB) - ENHANCED HOVER EFFECT */
+        .main-fab {
+            /* Ensures the button is perfectly circular and the same size across all screens */
+            width: 64px; /* 4rem */
+            height: 64px; /* 4rem */
+            padding: 0; /* Remove default padding */
+            font-size: 1.25rem; /* text-xl */
+            position: relative;
+            z-index: 10;
+            border-radius: 9999px; /* rounded-full */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
+        }
+        
+        /* FAB Hover Effect (Glow & Scale) */
+        .main-fab:hover {
+            /* Use a strong blue glow that complements the design */
+            transform: scale(1.15); 
+            box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.8), 0 0 30px 10px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Custom Hover Effect for "My Resume" Button - ENHANCED HOVER EFFECT */
+        .primary-button-glow {
+            transition: all 0.3s ease;
+        }
+        .primary-button-glow:hover {
+            transform: translateY(-3px) scale(1.01); /* Move up and slightly bigger */
+            /* Stronger dark shadow with a hint of blue for pop */
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4), 0 5px 10px rgba(0, 0, 0, 0.2); 
+            background-color: #374151; /* Darker background on hover */
+        }
+        
+        body.light-mode .primary-button-glow:hover {
+            /* Lighter shadow for light mode */
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
+            background-color: #d1d5db; /* Slightly darker light background on hover */
+        }
+        
+        /* Input styling fix */
+        .contact-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .contact-input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* --- Vertical Text Slider (v-slider) CSS --- */
+        .v-slider {
+            /* Height must match the line height of the surrounding text (3xl) */
+            height: 1.2em; 
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+            line-height: 1.2em;
+            font-weight: 700;
+        }
+
+        .v-slider__words {
+            display: inline-block;
+            /* 2 words * 2s hold = 4s total animation time */
+            animation: slide 6s infinite;
+            position: relative;
+            top: 0;
+        }
+
+        .v-slider__words span {
+            display: block;
+            /* Use the primary color for the sliding text */
+            color: #3B82F6; 
+            height: 1.2em;
+        }
+
+        /* Keyframes for the slide animation (2s hold per word) */
+        @keyframes slide {
+            0% { transform: translateY(0); } 
+            45% { transform: translateY(0); } /* Hold "Service" for 2s */
+            50% { transform: translateY(-1.2em); } /* Transition to "Calibration" */
+            95% { transform: translateY(-1.2em); } /* Hold "Calibration" for 2s */
+            100% { transform: translateY(0); } /* Transition back to "Service" */
+        }
+        /* --------------------------------------------- */
+
+         
+          /* ------------------------------------------- */
+        /* --- CUSTOM CSS for SLIDER HOVER BUTTON --- */
+        /* ------------------------------------------- */
+        /* START HIGHLIGHT: CUSTOM CSS for SLIDER HOVER BUTTON */
+        .social-slider-container {
+            /* The transition for the width is handled directly by Tailwind utility classes:
+               w-16 group-hover:w-[280px] */
+            max-width: 100%; /* Ensure it respects parent width */
+            transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Custom cubic-bezier for smooth slide */
+            border-radius: 0.5rem; /* rounded-lg */
+        }
+        
+        /* Fix for mobile/small screen widths */
+        @media (max-width: 768px) {
+            .social-slider-container {
+                /* On small screens, limit max expansion to 90% of screen width */
+                max-width: 90vw;
+            }
+            .social-slider-container:hover {
+                 width: 90vw;
+            }
+        }
+        /* END HIGHLIGHT: CUSTOM CSS for SLIDER HOVER BUTTON */
+    </style>
+</head>
+<body>
+
+  
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-opacity-95 backdrop-blur-sm shadow-md" style="background-color: var(--card-bg);">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="text-2xl font-bold gradient-text">Shah Jalal</a>
+                
+                <!-- UPDATED: DESKTOP Nav Links and Theme Toggle (Visible on md and above) -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#about" class="text-sm font-medium hover:text-blue-400 transition">About</a>
+                    <a href="#skills" class="text-sm font-medium hover:text-blue-400 transition">Skills</a>
+                    <a href="#experience" class="text-sm font-medium hover:text-blue-400 transition">Experience</a>
+                    <a href="#projects" class="text-sm font-medium hover:text-blue-400 transition">Projects</a>
+                    <a href="#education" class="text-sm font-medium hover:text-blue-400 transition">Education</a>
+                    <a href="#contact" class="text-sm font-medium hover:text-blue-400 transition">Contact</a>
+
+                    <!-- Theme Toggle Button (Desktop) - Now Round -->
+                    <button id="theme-toggle-desktop" class="focus:outline-none" title="Toggle Theme">
+                        <div id="switch-icon-desktop" class="switch-icon-container">
+                            <i data-lucide="sun" class="w-4 h-4 text-gray-400 light-mode:text-yellow-600" id="theme-icon-desktop"></i>
+                        </div>
+                    </button>
+                </div>
+                
+                <!-- RESTORED: Mobile Menu Toggle and Theme Toggle -->
+                <div class="flex items-center md:hidden">
+                    <!-- Theme Toggle Button (Mobile) - Now Round -->
+                    <button id="theme-toggle-mobile" class="focus:outline-none" title="Toggle Theme">
+                         <div id="switch-icon-mobile" class="switch-icon-container">
+                            <i data-lucide="sun" class="w-4 h-4 text-gray-400 light-mode:text-yellow-600" id="theme-icon-mobile"></i>
+                        </div>
+                    </button>
+                    <!-- ADDED: Menu Button -->
+                    <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-700 light-mode:hover:bg-gray-200 transition ml-2">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+     <!-- ADDED: Mobile Menu Overlay (Off-Canvas Menu) -->
+    <div id="mobile-menu" class="fixed inset-y-0 left-0 z-[100] transform -translate-x-full w-64 transition-transform duration-300 md:hidden shadow-2xl" style="background-color: var(--card-bg);">
+        <div class="h-full flex flex-col">
+            <!-- Menu Header -->
+            <div class="flex justify-between items-center h-16 px-4 border-b" style="border-color: var(--border-color);">
+                <a href="#" class="text-xl font-bold gradient-text">Navigation</a>
+                <button id="close-menu" class="p-2 rounded-full hover:bg-gray-700 light-mode:hover:bg-gray-200 transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <!-- Menu Links -->
+            <div class="flex flex-col p-4 space-y-2 flex-grow overflow-y-auto">
+                <!-- UPDATED: Added class 'mobile-nav-link' for JS handling -->
+                <a href="#about" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">About</a>
+                <a href="#skills" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Skills</a>
+                <a href="#experience" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Experience</a>
+                <a href="#projects" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Projects</a>
+                <a href="#education" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Education</a>
+                <a href="#contact" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Contact</a>
+            </div>
+            <div class="p-4 border-t" style="border-color: var(--border-color);">
+                <p class="text-sm text-gray-500">MD. Shah Jalal Mia</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- 1. Hero / About Section -->
+        <section id="about" class="py-16 md:py-24 flex flex-col md:flex-row items-center gap-12 text-center md:text-left scroll-reveal" style="--delay: 0s;">
+            <div class="md:w-3/5">
+                <p class="text-xl font-medium text-blue-500 mb-3 scroll-reveal" style="--delay: 0.1s;">Welcome! I am</p>
+                <h1 class="text-5xl sm:text-7xl font-extrabold mb-6 leading-tight scroll-reveal" style="--delay: 0.2s;">
+                    Md. Shahjalal Shakil
+                </h1>
+                
+                <!-- Updated Title with Vertical Text Slider -->
+                <h2 class="sm:text-4xl font-semibold mb-6 scroll-reveal" style="--delay: 0.3s;">
+                    Engineer 
+                    <!-- Vertical Text Slider Block starts here -->
+                    <span class="v-slider">
+                        <span class="v-slider__words">
+                            <!-- Words for the slider -->
+                            <span>Service</span>
+                            <span>Calibration</span>
+                        </span>
+                    </span>
+                    
+                    <!-- Vertical Text Slider Block ends here -->
+                </h2>
+                <!-- End Updated Title -->
+                
+                <p class="text-lg text-gray-400 light-mode:text-gray-600 mb-8 scroll-reveal" style="--delay: 0.4s;">
+                    My career objective is to obtain a challenging, long-term position that requires a strong sense of responsibility and commitment, allowing me to develop my skills and creativity. My expertise focuses on troubleshooting machinery, mechanical systems, electrical equipment, and providing textile testing and calibration services.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <!-- My Resume Button - Added primary-button-glow class for hover effect -->
+                    <a href="#" onclick="alert('This button is a placeholder. In a live portfolio, clicking this would download the CV file.');" class="inline-flex items-center primary-button-glow bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl light-mode:bg-gray-300 light-mode:text-gray-800 light-mode:hover:bg-gray-400 scroll-reveal" style="--delay: 0.5s;">
+                        My Resume <i data-lucide="download" class="w-5 h-5 ml-2"></i>
+                    </a>
+                </div>
+
+            </div>
+            <div class="md:w-2/5 flex justify-center scroll-reveal" style="--delay: 0.6s;">
+                <!-- Profile Image Placeholder/System -->
+                <div class="w-90 h-90 flex items-center justify-center">
+                    <img id="profile-picture" 
+                         class="profile-img" 
+                         src="https://i.postimg.cc/vZM0JTwF/Picsart-25-12-13-03-06-18-185.png" 
+                         alt="MD. Shah Jalal Mia Profile Picture"
+                         onerror="this.onerror=null; this.src='https://placehold.co/256x256/3B82F6/FFFFFF/png?text=Image+Unavailable';"
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Skills Section -->
+        <section id="skills" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="zap" class="inline-block w-8 h-8 mr-3"></i> My Expertise
+            </h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Technical Skills -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
+                    <h4 class="text-2xl font-semibold mb-4 text-green-400 flex items-center light-mode:text-green-600"><i data-lucide="wrench" class="w-6 h-6 mr-3"></i> Technical Skills</h4>
+                    <ul class="space-y-3 text-gray-300 light-mode:text-gray-700">
+                        <li>ISO/ISE 17025:2017 Calibration (Mechanical, Electro Technical, Thermal)</li>
+                        <li>Textile Testing Machine Installation & Servicing</li>
+                        <li>Maintenance of Electrolux Washer, Dryer, Ironing Machines</li>
+                        <li>Solar Electrical System (NTVQF Level-1 & 2)</li>
+                        <li>Servicing of KURISH, Algotex, ZSK Machines (MastTech)</li>
+                    </ul>
+                </div>
+
+                <!-- Computer Literacy -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
+                    <h4 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center light-mode:text-purple-600"><i data-lucide="monitor" class="w-6 h-6 mr-3"></i> Computer Literacy</h4>
+                    <ul class="space-y-3 text-gray-300 light-mode:text-gray-700">
+                        <li>Ms-Word, Ms-Excel, Ms Power Point, Networking (LAN, WAN, Internet)</li>
+                        <li>Photoshop, Illustrator, Video Editing, Android App Development</li>
+                        <li>Downloading & Software Install</li>
+                    </ul>
+                </div>
+
+                <!-- Core Competencies -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.3s;">
+                    <h4 class="text-2xl font-semibold mb-4 text-yellow-400 flex items-center light-mode:text-yellow-600"><i data-lucide="shield-check" class="w-6 h-6 mr-3"></i> Core Competencies</h4>
+                    <ul class="list-disc list-inside text-gray-300 space-y-3 light-mode:text-gray-700">
+                        <li>Troubleshooting & Root Cause Analysis</li>
+                        <li>Quality Assurance (QA) & Management</li>
+                        <li>ISO and ASTM Testing Standards</li>
+                        <li>Recruitment & Selection Process Management</li>
+                        <li>Digital Marketing (Learning and Earning Development Project)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Experience Section (Timeline) -->
+        <section id="experience" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="briefcase" class="inline-block w-8 h-8 mr-3"></i> Professional Experience
+            </h3>
+            <div class="max-w-4xl mx-auto">
+                
+                <!-- Job 1: Farabi Corporation (Latest) -->
+                <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.1s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">July 2024 - Present</p>
+                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Engineer (Service & Calibration)</h4>
+                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Farabi Corporation</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                        <li>Diagnosing and resolving mechanical and electrical issues.</li>
+                        <li>Installation, servicing, and maintenance of textile testing and laundry systems.</li>
+                        <li>Ensuring calibration compliance for industrial and laboratory equipment.</li>
+                    </ul>
+                </div>
+
+                <!-- Job 2: SmartCare Solution Ltd. -->
+                <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.2s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">February 2023 - June 2024</p>
+                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Asst. Engineer (Service & Calibration)</h4>
+                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">SmartCare Solution Ltd.</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                        <li>Providing prompt and effective solutions for technical machine problems.</li>
+                        <li>Maintaining high standards for calibration services.</li>
+                        <li>Assisting in recruitment and selection processes.</li>
+                    </ul>
+                </div>
+
+                <!-- Job 3: MastTech International Ltd -->
+                <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.3s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">June 2022 - February 2023</p>
+                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Service Engineer</h4>
+                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">MastTech International Ltd</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                        <li>Servicing and troubleshooting KURISH, Algotex, and ZSK machines.</li>
+                        <li>Delivering calibration services for industrial equipment.</li>
+                    </ul>
+                </div>
+
+                <!-- Job 4: Bangladesh Material Testing Laboratory (BMTL) -->
+                <div class="timeline-item pb-0 scroll-reveal" style="--delay: 0.4s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">October 2019 - June 2022</p>
+                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Lab Technician</h4>
+                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Bangladesh Material Testing Laboratory (BMTL)</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                        <li>Managing all technical operations of the laboratory.</li>
+                        <li>Operating, maintaining, and preparing reports for lab machines, ensuring Quality Assurance.</li>
+                        <li>Developing quality manual, quality checklist, SOP etc.</li>
+                        <li>Supervising tests and calibrations according to ISO and ASTM Testing standards.</li>
+                        <li>Maintaining company's confidential Documents.</li>
+                        <li>Time to time follow up & decision taken for quick support on maintenance purpose to management. (From CV)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. Projects Section -->
+        <section id="projects" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="folder-check" class="inline-block w-8 h-8 mr-3"></i> Projects & Key Achievements
+            </h3>
+            <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                
+                <!-- Project 1: Calibration Management System -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
+                    <h4 class="text-2xl font-semibold mb-3 text-blue-300 light-mode:text-blue-700">ISO 17025 Calibration System Setup</h4>
+                    <p class="text-sm text-gray-500 mb-4">Quality Assurance & Compliance</p>
+                    <p class="text-gray-400 light-mode:text-gray-600 text-sm">
+                        Led the implementation and maintenance of the ISO/IEC 17025:2017 quality standard for mechanical, electro-technical, and thermal calibration services at client sites.
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">ISO 17025</span>
+                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Quality Management</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: Textile Machine Installation -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
+                    <h4 class="text-2xl font-semibold mb-3 text-blue-300 light-mode:text-blue-700">Textile Lab Equipment Commissioning</h4>
+                    <p class="text-sm text-gray-500 mb-4">Installation & Servicing</p>
+                    <p class="text-gray-400 light-mode:text-gray-600 text-sm">
+                        Managed the complete installation, commissioning, and regular maintenance of industrial textile testing and laundry equipment, including Electrolux Washer/Dryer units.
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Electrolux</span>
+                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Troubleshooting</span>
+                    </div>
+                </div>
+
+                <!-- Project 3: Technical Documentation Development -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.3s;">
+                    <h4 class="text-2xl font-semibold mb-3 text-blue-300 light-mode:text-blue-700">Standard Operating Procedure (SOP) Creation</h4>
+                    <p class="text-sm text-gray-500 mb-4">Documentation & Process Flow</p>
+                    <p class="text-gray-400 light-mode:text-gray-600 text-sm">
+                        Developed comprehensive quality manuals, checklists, and SOPs for the Bangladesh Material Testing Laboratory (BMTL) to standardize testing and calibration procedures.
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Documentation</span>
+                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">QA</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Education Section -->
+        <section id="education" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="graduation-cap" class="inline-block w-8 h-8 mr-3"></i> Educational Qualifications
+            </h3>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- Education 1 -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2021 - 2025 (Continuing)</p>
+                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">BSc Engineer</h4>
+                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Electrical Electronics Engineering</p>
+                    <p class="text-gray-400 light-mode:text-gray-600">Dhaka International University</p>
+                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 3.25 (Out of 4.00)</p>
+                </div>
+
+                <!-- Education 2 -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
+                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Diploma in Electrical Engineering</h4>
+                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Electrical Technology</p>
+                    <p class="text-gray-400 light-mode:text-gray-600">Institute of Engineering & Technology, Rangpur</p>
+                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 2.99 (Out of 4.00)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Contact Section (Updated) -->
+        <section id="contact" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="mail" class="inline-block w-8 h-8 mr-3"></i> Get In Touch
+            </h3>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+                
+                <!-- Left Side: Contact Information -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
+                    <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Contact Information</h4>
+                    
+                    <div class="space-y-6">
+                        <!-- Phone -->
+                        <div class="flex items-start">
+                            <i data-lucide="phone" class="w-6 h-6 text-blue-400 mr-4 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Phone</p>
+                                <a href="tel:+8801705864333" class="text-gray-300 hover:text-blue-400 transition light-mode:text-gray-700">+8801705864333</a>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex items-start">
+                            <i data-lucide="at-sign" class="w-6 h-6 text-blue-400 mr-4 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Email</p>
+                                <a href="mailto:shahjalalshakil76@gmail.com" class="text-gray-300 hover:text-blue-400 transition light-mode:text-gray-700">shahjalalshakil76@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="flex items-start">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-blue-400 mr-4 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Location</p>
+                                <p class="text-gray-300 light-mode:text-gray-700">House #35, Road #12, Sector #12, Uttara, Dhaka-1230</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Contact Form -->
+                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
+                    <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Send a Message</h4>
+                    
+                    <form id="contact-form" class="space-y-4">
+                        <!-- Name Input -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium mb-1">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name" class="contact-input">
+                        </div>
+                        
+                        <!-- Email Input -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="contact-input">
+                        </div>
+
+                        <!-- Message Input -->
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" required placeholder="How can I help you?" class="contact-input"></textarea>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl">
+                            Send Message <i data-lucide="send" class="w-5 h-5 ml-2"></i>
+                        </button>
+
+                        <!-- Message Status Display -->
+                        <div id="form-status" class="mt-4 p-3 rounded text-sm hidden"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+           <!-- 7. Social Buttons Section (Updated with Slider Hover Effect) -->
+        <section id="social" class="py-12 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="share-2" class="inline-block w-8 h-8 mr-3"></i> Connect with Me
+            </h3>
+            
+            <!-- START HIGHLIGHT: SLIDER HOVER BUTTON STRUCTURE -->
+            <div class="flex justify-center scroll-reveal group" style="--delay: 0.1s;">
+                <!-- Main button/container that expands. Custom max-width for responsiveness -->
+                <div class="flex items-center rounded-lg shadow-2xl card-glow overflow-hidden social-slider-container w-16 group-hover:w-[280px] md:group-hover:w-96 transition-all duration-500 ease-in-out" style="background-color: var(--card-bg); border-color: var(--border-color);">
+                    
+                   <!-- START HIGHLIGHT: Navigation fix. Changed <a> to <button> and removed href. -->
+                    <!-- 'Connect' Icon/Button (Always Visible) -->
+                    <button type="button" class="w-16 h-16 flex items-center justify-center bg-blue-600 text-white font-bold flex-shrink-0 transition-colors duration-300 group-hover:bg-blue-700 hover:scale-105 focus:outline-none" title="Connect">
+                        <i data-lucide="move-right" class="w-6 h-6"></i>
+                    </button>
+                    <!-- END HIGHLIGHT: Navigation fix. Changed <a> to <button> and removed href. -->
+                    
+                    <!-- Icons Container (Slides in/appears on hover) -->
+                    <div class="flex space-x-4 px-4 items-center h-16 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                        <!-- LinkedIn -->
+                        <a href="https://www.linkedin.com/in/md-shah-jalal-mia-1a2b3c4d/" target="_blank" class="text-gray-400 hover:text-blue-400 light-mode:hover:text-blue-600 transition hover:scale-110" title="LinkedIn">
+                            <i data-lucide="linkedin" class="w-6 h-6"></i>
+                        </a>
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/+8801705864333" target="_blank" class="text-gray-400 hover:text-green-400 light-mode:hover:text-green-600 transition hover:scale-110" title="WhatsApp">
+                            <i data-lucide="message-square" class="w-6 h-6"></i>
+                        </a>
+                        <!-- Email -->
+                        <a href="mailto:shahjalalshakil76@gmail.com" class="text-gray-400 hover:text-red-400 light-mode:hover:text-red-600 transition hover:scale-110" title="Email">
+                            <i data-lucide="at-sign" class="w-6 h-6"></i>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/MdShahJalalMia/" target="_blank" class="text-gray-400 hover:text-blue-700 light-mode:hover:text-blue-800 transition hover:scale-110" title="Facebook">
+                            <i data-lucide="facebook" class="w-6 h-6"></i>
+                        </a>
+                        <!-- Scroll to Contact -->
+                        <a href="#contact" class="text-gray-400 hover:text-blue-400 light-mode:hover:text-blue-600 transition hover:scale-110" title="Contact Form">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- END HIGHLIGHT: SLIDER HOVER BUTTON STRUCTURE -->
+        </section>
+
+    </main>
+    
+    <!-- Floating Action Button (FAB) with Circular Text -->
+    <div id="fab-wrapper" class="fixed bottom-6 right-6 z-50">
+        <div class="circular-fab">
+            <!-- Circular Text will be injected here by JS -->
+            <div id="circular-text-display" class="circular-text text-gray-400 light-mode:text-gray-600">
+                <!-- Spans will be added here -->
+            </div>
+            
+            <!-- Main 'Hire Me' button - Perfectly Circular (Used main-fab class) -->
+            <!-- FAB is now styled purely via the .main-fab CSS hover for the glow effect -->
+            <a href="#contact" class="main-fab bg-blue-600 text-white font-semibold shadow-2xl">
+                <!-- Icon only now -->
+                <i data-lucide="briefcase" class="w-6 h-6"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 mt-16 light-mode:bg-white light-mode:border-gray-300 transition duration-300">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-400 light-mode:text-gray-600">
+            <p>&copy; 2025 All rights reserved | SHAH JALAL SHAKIL </p>
+        </div>
+    </footer>
+
+    <!-- RESTORED: JavaScript for Scroll Animation, Theme Toggle, Form Handling, and Circular Text -->
+    <script>
+        // Firebase global variables are defined locally with default values
+        var __app_id = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        var __firebase_config = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        var __initial_auth_token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+        
+        const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+        const themeIconDesktop = document.getElementById('theme-icon-desktop');
+        const switchIconContainerDesktop = document.getElementById('switch-icon-desktop');
+        
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const themeIconMobile = document.getElementById('theme-icon-mobile');
+        const switchIconContainerMobile = document.getElementById('switch-icon-mobile');
+
+        const body = document.body;
+        const storedTheme = localStorage.getItem('theme') || 'dark';
+
+        // Function to initialize theme and set both icons correctly
+        function initializeTheme() {
+            const isLight = storedTheme === 'light';
+            if (isLight) {
+                body.classList.add('light-mode');
+            }
+            
+            // Set initial state for desktop
+            if (themeIconDesktop) themeIconDesktop.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+            
+            // Set initial state for mobile
+            if (themeIconMobile) themeIconMobile.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+
+            // Re-create Lucide icons to ensure they render
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+        
+        // Function to toggle theme and update both sets of icons
+        function toggleTheme() {
+            let isLightMode = body.classList.contains('light-mode');
+            const newIsLightMode = !isLightMode;
+            const iconName = newIsLightMode ? 'moon' : 'sun';
+
+            const containersToSpin = [switchIconContainerDesktop, switchIconContainerMobile].filter(e => e);
+
+            // HIGHLIGHT: রোটেশন অ্যানিমেশন ট্রিগার করার জন্য JS লজিক শুরু
+            // 1. Rotation Animation শুরু করুন
+            containersToSpin.forEach(container => {
+                // 'spin-active' ক্লাস যোগ করুন যা CSS অ্যানিমেশন ট্রিগার করবে
+                container.classList.add('spin-active');
+            });
+            
+            // 2. থিম স্টেট আপডেট করুন
+            if (newIsLightMode) {
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+            }
+            
+            // 500ms অপেক্ষা করুন (CSS অ্যানিমেশন এবং ট্রানজিশনের সময়কাল)
+            setTimeout(() => {
+                // 3. ঘূর্ণন শেষ হওয়ার পরে আইকন আপডেট করুন
+                if (themeIconDesktop) themeIconDesktop.setAttribute('data-lucide', iconName);
+                if (themeIconMobile) themeIconMobile.setAttribute('data-lucide', iconName);
+                
+                // 4. 'spin-active' ক্লাসটি মুছে ফেলুন এবং লুসাইড আইকন পুনরায় তৈরি করুন
+                containersToSpin.forEach(container => {
+                    container.classList.remove('spin-active');
+                });
+                
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+
+            }, 500); // 500ms (অ্যানিমেশন স্থায়িত্ব)
+            // HIGHLIGHT: রোটেশন অ্যানিমেশন ট্রিগার করার জন্য JS লজিক শেষ
+        }
+        // UPDATED: Attach listeners to both desktop and mobile buttons
+        if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
+        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+        // -----------------------------
+
+        // --- ADDED: Mobile Menu Logic---
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMenu() {
+            mobileMenu.classList.remove('-translate-x-full');
+            document.body.classList.add('menu-open'); // Prevent scrolling background
+        }
+
+        function closeMenuHandler() {
+            mobileMenu.classList.add('-translate-x-full');
+            document.body.classList.remove('menu-open'); // Restore scrolling
+        }
+
+        if (menuToggle) menuToggle.addEventListener('click', openMenu);
+        if (closeMenu) closeMenu.addEventListener('click', closeMenuHandler);
+
+        // ADDED: Close menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMenuHandler);
+        });
+        // -----------------------------
+        // --- Contact Form Handling ---
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            // const message = document.getElementById('message').value; // Unused for demo alert
+
+            // Display a success message (Demo)
+            formStatus.classList.remove('hidden', 'bg-red-400', 'text-red-900', 'bg-green-100', 'text-green-800');
+            formStatus.classList.add('bg-green-500/20', 'text-green-400'); // Tailwind classes for success
+            formStatus.innerHTML = `Message sent successfully! (Demo)<br>Thank you, ${name}. I will contact you at ${email}.`;
+            
+            // Optionally clear the form
+            contactForm.reset();
+
+            // Hide status after a few seconds
+            setTimeout(() => {
+                formStatus.classList.add('hidden');
+            }, 5000);
+        });
+        // -----------------------------
+
+  // --- Scroll Animation Logic (Updated for Re-triggering) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // When element enters the viewport, add 'is-visible' (animates in)
+                    entry.target.classList.add('is-visible');
+                } else {
+                    // When element leaves the viewport, remove 'is-visible' (resets animation)
+                    entry.target.classList.remove('is-visible');
+                }
+            });
+        }, {
+            // Threshold determines how much of the item must be visible
+            threshold: 0.1, 
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.scroll-reveal').forEach(element => {
+            observer.observe(element);
+        });
+        // -----------------------------
+
+
+        // --- Circular Text FAB Logic ---
+        const circularTextElement = document.getElementById('circular-text-display');
+        // Add a dot for better visual separation
+        const textToDisplay = "SERVICE & CALIBRATION ENGINEER . ";
+        const numCharacters = textToDisplay.length;
+        // Calculate angle needed per character for 360 degrees
+        const angleIncrement = 360 / numCharacters; 
+        
+        if (circularTextElement) {
+            textToDisplay.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                const rotation = angleIncrement * index;
+                
+                // Rotate the span container around the center (0, 0), with the rotation point 75px down (the radius)
+                span.style.transform = `rotate(${rotation}deg)`;
+                span.style.transformOrigin = `0 75px`; 
+                
+                circularTextElement.appendChild(span);
+            });
+        }
+        // -----------------------------
+
+
+        // --- General Initializations ---
+        // 1. Initialize Theme first
+        initializeTheme();
+
+        // 2. Initialize Lucide Icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // 3. Simple smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Close menu if it's the mobile menu that triggered the click
+                closeMenuHandler(); 
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // -----------------------------
+    </script>
+</body>
+</html>
