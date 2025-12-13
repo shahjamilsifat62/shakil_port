@@ -20,6 +20,9 @@
             --border-color: #dfe2e7;
             --dot-color: #4b4ef3;
             --dot-border: #92beff;
+             /* Neumorphism specific shadows (Dark Mode) */
+            --neumorph-inset-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(45, 45, 45, 0.2);
+            --neumorph-lift-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(45, 45, 45, 0.2);
         }
 
         body.light-mode {
@@ -29,6 +32,9 @@
             --card-bg: #ffffff; /* White card background */
             --border-color: #4b5054; /* Light gray border */
             --dot-border: #8e8e90; /* Matches light background */
+             /* Neumorphism specific shadows (Light Mode) */
+            --neumorph-inset-shadow: inset 5px 5px 10px #d9d9d9, inset -5px -5px 10px #ffffff;
+            --neumorph-lift-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
         }
 
         /* Apply CSS variables universally */
@@ -116,18 +122,7 @@
         }
         /* ------------------------------------- */
 
-        /* Custom CSS for scroll animation effects */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            transition-delay: var(--delay, 0s);
-        }
-        .scroll-reveal.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+       
         /* Custom glow effect on buttons/cards - Color depends on theme, background uses variable */
         .card-glow {
             background-color: var(--card-bg);
@@ -270,7 +265,19 @@
             border-color: #3B82F6;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
         }
-        
+
+
+         /* Custom CSS for scroll animation effects */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transition-delay: var(--delay, 0s);
+        }
+        .scroll-reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         /* --- Vertical Text Slider (v-slider) CSS --- */
         .v-slider {
             /* Height must match the line height of the surrounding text (3xl) */
@@ -330,7 +337,87 @@
                  width: 90vw;
             }
         }
-        /* END HIGHLIGHT: CUSTOM CSS for SLIDER HOVER BUTTON */
+       /* ------------------------------------------- */
+        /* --- REWRITTEN NAVIGATION ICON BUTTON EFFECT --- */
+        /* --- FIX: Increased delay on text entry (0.25s) to guarantee icon exit (0.2s) first. --- */
+        /* ------------------------------------------- */
+        .nav-icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            height: 36px;
+            width: 36px; /* Initial fixed width for icon only */
+            padding: 0; 
+            border-radius: 9999px; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Controls the width expansion */
+            color: var(--text-color);
+            background-color: var(--card-bg); 
+            overflow: hidden; 
+            white-space: nowrap; 
+            cursor: pointer;
+            box-shadow: var(--neumorph-lift-shadow);
+            position: relative; 
+        }
+        
+        /* Icon Styling: Positioned absolutely, centered, visible by default */
+        .nav-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.8); /* Initial state: Centered, full size */
+            opacity: 1;
+            z-index: 30; 
+            transition: opacity 0.15s ease, transform 0.2s ease; /* Fast transition for exit */
+        }
+
+        /* Text Label Styling: Centered in theory, but pushed left to hide outside 36px button */
+        .nav-icon-button .icon-label {
+            position: absolute; 
+            left: 50%; /* Center anchor point */
+            top: 50%;
+            transform: translate(-50%, -50%); /* Centers the text relative to its anchor */
+            margin-left: -50px; /* Pushes the label aggressively left, out of the 36px viewport */
+            opacity: 0; 
+            z-index: 20; /* Lower Z-index than icon */
+            font-size: 0.875rem; 
+            font-weight: 500; 
+            /* Base state: No delay needed */
+            transition: opacity 0.3s ease, margin-left 0.3s ease; 
+        }
+
+        /* HOVER EFFECTS: Expands, lifts shadow, hides icon, shows text */
+        .nav-icon-button:hover {
+            width: 120px; /* Expanded width */
+            color: var(--primary-color); 
+            box-shadow: var(--neumorph-lift-shadow);
+            transform: scale(1.02); 
+        }
+        
+        /* On Hover: Icon disappears quickly */
+        .nav-icon-button:hover .nav-icon {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5); /* Shrinks and fades */
+            transition: opacity 0.15s ease, transform 0.2s ease; /* Immediate start, fast finish */
+        }
+
+        /* On Hover: Text moves into the actual center and appears */
+        .nav-icon-button:hover .icon-label {
+            opacity: 1; 
+            margin-left: 0; /* Moves back to center anchor */
+            /* *** CRITICAL FIX: Add 0.25s delay to both opacity and margin-left transitions *** */
+            transition: opacity 0.3s ease 0.25s, ease 0.25s;
+        }
+        /* ------------------------------------------- */
+         /* ACTIVE/FOCUS EFFECTS: Button is pressed down (inset shadow for tap effect) */
+        .nav-icon-button:active,
+        .nav-icon-button:focus {
+            box-shadow: var(--neumorph-inset-shadow); /* Use inset shadow to make it look pressed */
+            transform: scale(0.98); /* Slightly shrink for deeper press feel */
+            outline: none; /* Remove default browser outline */
+            color: var(--primary-color);
+        }
+        /* ------------------------------------------- */
+        
     </style>
 </head>
 <body>
@@ -343,13 +430,32 @@
                 <a href="#" class="text-2xl font-bold gradient-text">Shah Jalal</a>
                 
                 <!-- UPDATED: DESKTOP Nav Links and Theme Toggle (Visible on md and above) -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="#about" class="text-sm font-medium hover:text-blue-400 transition">About</a>
-                    <a href="#skills" class="text-sm font-medium hover:text-blue-400 transition">Skills</a>
-                    <a href="#experience" class="text-sm font-medium hover:text-blue-400 transition">Experience</a>
-                    <a href="#projects" class="text-sm font-medium hover:text-blue-400 transition">Projects</a>
-                    <a href="#education" class="text-sm font-medium hover:text-blue-400 transition">Education</a>
-                    <a href="#contact" class="text-sm font-medium hover:text-blue-400 transition">Contact</a>
+                <div class="hidden md:flex items-center space-x-3">
+                    <!-- Navigation links are now icons with Neumorphism button effects and text reveal on hover -->
+                    <a href="#about" class="nav-icon-button" title="Profile">
+                        <i data-lucide="user" class="nav-icon"></i>
+                        <span class="icon-label">Profile</span>
+                    </a>
+                    <a href="#skills" class="nav-icon-button" title="Capabilities">
+                        <i data-lucide="zap" class="nav-icon"></i>
+                        <span class="icon-label">Capabilities</span>
+                    </a>
+                    <a href="#experience" class="nav-icon-button" title="Journey">
+                        <i data-lucide="briefcase" class="nav-icon"></i>
+                        <span class="icon-label">Journey</span>
+                    </a>
+                    <a href="#projects" class="nav-icon-button" title="Creations">
+                        <i data-lucide="folder-check" class="nav-icon"></i>
+                        <span class="icon-label">Creations</span>
+                    </a>
+                    <a href="#education" class="nav-icon-button" title="Qualifications">
+                        <i data-lucide="graduation-cap" class="nav-icon"></i>
+                        <span class="icon-label">Qualifications</span>
+                    </a>
+                    <a href="#contact" class="nav-icon-button" title="Let's Talk">
+                        <i data-lucide="mail" class="nav-icon"></i>
+                        <span class="icon-label">Let's Talk</span>
+                    </a>
 
                     <!-- Theme Toggle Button (Desktop) - Now Round -->
                     <button id="theme-toggle-desktop" class="focus:outline-none" title="Toggle Theme">
@@ -382,7 +488,7 @@
         <div class="h-full flex flex-col">
             <!-- Menu Header -->
             <div class="flex justify-between items-center h-16 px-4 border-b" style="border-color: var(--border-color);">
-                <a href="#" class="text-xl font-bold gradient-text">Navigation</a>
+                <a href="#" class="text-xl font-bold gradient-text">Shahjalal Shakil</a>
                 <button id="close-menu" class="p-2 rounded-full hover:bg-gray-700 light-mode:hover:bg-gray-200 transition">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
@@ -417,7 +523,7 @@
                 </h1>
                 
                 <!-- Updated Title with Vertical Text Slider -->
-                <h2 class="sm:text-4xl font-semibold mb-6 scroll-reveal" style="--delay: 0.3s;">
+                <h2 class="sm:text-4xl font-semibold mb-6 scroll-reveal flex flex-row items-center justify-center text-left md:justify-start md:text-left gap-2" style="--delay: 0.3s;">
                     Engineer 
                     <!-- Vertical Text Slider Block starts here -->
                     <span class="v-slider">
@@ -809,10 +915,10 @@
             }
             
             // Set initial state for desktop
-            if (themeIconDesktop) themeIconDesktop.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+            if (themeIconDesktop) themeIconDesktop.setAttribute('data-lucide', isLight ? 'sun' : 'sun');
             
             // Set initial state for mobile
-            if (themeIconMobile) themeIconMobile.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+            if (themeIconMobile) themeIconMobile.setAttribute('data-lucide', isLight ? 'sun' : 'sun');
 
             // Re-create Lucide icons to ensure they render
             if (typeof lucide !== 'undefined') {
@@ -824,7 +930,7 @@
         function toggleTheme() {
             let isLightMode = body.classList.contains('light-mode');
             const newIsLightMode = !isLightMode;
-            const iconName = newIsLightMode ? 'moon' : 'sun';
+            const iconName = newIsLightMode ? 'sun' : 'sun';
 
             const containersToSpin = [switchIconContainerDesktop, switchIconContainerMobile].filter(e => e);
 
