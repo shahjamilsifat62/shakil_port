@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD. SHAH JALAL MIA | Professional Portfolio</title>
+    <title>SHAHJALAL SHAKIL | Professional Portfolio</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Lucide Icons (type="module" removed for better compatibility) -->
@@ -11,31 +11,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     
     <style>
+        
         /* Define color variables for both themes */
         :root {
             /* Dark Mode Defaults */
             --bg-color: #0d1117;
+            --card-bg: rgba(17, 24, 39, 0.7);
             --text-color: #c9d1d9;
-            --card-bg: #161b22;
+            --icon-color:white;
+            --primary-color: #3B82F6;
             --border-color: #dfe2e7;
             --dot-color: #4b4ef3;
             --dot-border: #92beff;
-             /* Neumorphism specific shadows (Dark Mode) */
+            /* Neumorphism specific shadows (Dark Mode) */
             --neumorph-inset-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(45, 45, 45, 0.2);
             --neumorph-lift-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(45, 45, 45, 0.2);
+            --gradient-start: #6EE7B7; /* Emerald 300 (হালকা সবুজ) */
+            --gradient-end: #3B82F6;  /* Blue 500 (উজ্জ্বল নীল) */
+            --bg-gradient-start: #100c1f; /* Darker Blue-Gray (almost black) */
+            --bg-gradient-end: #081f2c;
+            --spotlight-color: rgba(59, 130, 246, 0.15);
+            
+
         }
 
         body.light-mode {
             /* Light Mode Overrides */
             --bg-color: #EAF6FF; /* Light gray background */
             --text-color: #1F3B57; /* Dark text */
-            --card-bg: #ffffff; /* White card background */
+            --card-bg: rgba(243, 244, 246, 0.8);
+            --primary-color: #2563EB;
+            --icon-color:black; /* White card background */
             --border-color: #4b5054; /* Light gray border */
             --dot-border: #8e8e90; /* Matches light background */
-             /* Neumorphism specific shadows (Light Mode) */
+            /* Neumorphism specific shadows (Light Mode) */
             --neumorph-inset-shadow: inset 5px 5px 10px #d9d9d9, inset -5px -5px 10px #ffffff;
-            --neumorph-lift-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+            --neumorph-lift-shadow: 5px 5px 10px #d9d9d967, -5px -5px 10px #ffffff56;
+            --gradient-start: #243748; /* Indigo 600 */
+            --gradient-end: #4b749f;  /* Violet 600 */
+            --bg-gradient-start: #cfd9df; /* Very Light Gray */
+            --bg-gradient-end: #e4f4fc;
+            --spotlight-color: rgba(0, 0, 0, 0.3);  /* White */
+            
+            
         }
+        
+       
 
         /* Apply CSS variables universally */
         body {
@@ -46,12 +67,93 @@
             scroll-behavior: smooth;
             transition: background-color 0.6s ease, color 0.4s ease;
         }
-          /* ADDED: Ensures body overflow is hidden when mobile menu is open */
+
+        /* ADDED: Ensures body overflow is hidden when mobile menu is open */
         body.menu-open {
             overflow: hidden;
         }
+
+        /* Background Gradient Layer */
+        .bg-gradient-layer {
+            position: fixed; /* Screen scroll korleo eita fixed thakbe */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Sob kichur niche thakbe */
+            pointer-events: none;
+            background-color: #030712;
+            /* Apnar requested radial gradient code */
+            background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120, 119, 198, 0.3), rgba(255, 255, 255, 0));
+        }
         
-       
+        body.light-mode .bg-gradient-layer {
+            background-color: #ffffff;
+            background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(59, 130, 246, 0.15), rgba(255, 255, 255, 0));
+        }
+
+       #about-container {
+            position: relative;
+            background-color: var(--bg-gradient-start);
+            border-radius: 1rem; 
+            padding: 1px; 
+            overflow: visible; /* Shadow jeno baire dekha jay */
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        /* Moving spotlight layer for Border */
+        .spotlight-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            border-radius: 1rem;
+            background: radial-gradient(
+                400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                var(--gradient-start), 
+                var(--gradient-end),
+                transparent 80%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        /* Outer Glow Shadow Effect */
+        #about-container::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            z-index: -2;
+            background: radial-gradient(
+                500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                var(--spotlight-color), 
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            border-radius: 1rem;
+            filter: blur(25px);
+        }
+
+        #about-container:hover .spotlight-glow,
+        #about-container:hover::before {
+            opacity: 1;
+        }
+
+        /* Inner Content Box */
+        .about-content-inner {
+            background-image: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
+            border-radius: 1rem;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
         /* --- HIGHLIGHT: থিম বাটনকে গোলাকার করার জন্য CSS পরিবর্তন --- */
         #theme-toggle-desktop, #theme-toggle-mobile {
             /* HIGHLIGHT: বাটনটিকে নিখুঁত বৃত্ত (perfect circle) তৈরি করা হয়েছে */
@@ -125,13 +227,16 @@
        
         /* Custom glow effect on buttons/cards - Color depends on theme, background uses variable */
         .card-glow {
-            background-color: var(--card-bg);
+            background-color: var(--card-bg); 
+            backdrop-filter: blur(8px); 
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             transition: all 0.3s ease;
         }
         .card-glow:hover {
-            transform: translateY(-2px);
-            /* Dark Mode Glow */
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.1);
+            transform: translateY(-4px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
         }
         
         body.light-mode .card-glow:hover {
@@ -139,10 +244,24 @@
             box-shadow: 0 10px 15px -3px rgba(5, 82, 248, 0.433), 0 4px 6px -2px rgba(37, 99, 235, 0.08);
         }
 
+
         .gradient-text {
-            background-image: linear-gradient(to right, #6EE7B7, #3B82F6);
+            background-image: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* [UPDATED] Apply Gradient Background to About Section */
+        #about-container {
+            /* Use a diagonal gradient with the new background variables */
+            background-image: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
+            border-radius: 1rem; 
+            box-shadow: 0;/* Deeper shadow for elevation */
+            transition: all 0.6s ease;
+        }
+        body.light-mode #about-container {
+             /* Soften the shadow in light mode */
+             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05); 
         }
 
         /* Custom styling for timeline dots/lines using variables */
@@ -211,43 +330,44 @@
         }
 
         /* Main 'Hire Me' button styling (FAB) - ENHANCED HOVER EFFECT */
-        .main-fab {
-            /* Ensures the button is perfectly circular and the same size across all screens */
-            width: 64px; /* 4rem */
-            height: 64px; /* 4rem */
-            padding: 0; /* Remove default padding */
-            font-size: 1.25rem; /* text-xl */
+        .fab-glow {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)) !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            z-index: 10;
-            border-radius: 9999px; /* rounded-full */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
         }
-        
-        /* FAB Hover Effect (Glow & Scale) */
-        .main-fab:hover {
-            /* Use a strong blue glow that complements the design */
-            transform: scale(1.15); 
-            box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.8), 0 0 30px 10px rgba(59, 130, 246, 0.4);
+        .fab-glow::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            background: radial-gradient(circle, var(--gradient-end) 0%, transparent 70%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
         }
-        
-        /* Custom Hover Effect for "My Resume" Button - ENHANCED HOVER EFFECT */
-        .primary-button-glow {
-            transition: all 0.3s ease;
+        .fab-glow:hover::before {
+            opacity: 0.6;
         }
-        .primary-button-glow:hover {
-            transform: translateY(-3px) scale(1.01); /* Move up and slightly bigger */
-            /* Stronger dark shadow with a hint of blue for pop */
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4), 0 5px 10px rgba(0, 0, 0, 0.2); 
-            background-color: #374151; /* Darker background on hover */
+        .fab-glow:hover {
+            box-shadow: 0 0 35px rgba(59, 130, 246, 0.8);
+            transform: scale(1.15) rotate(5deg);
         }
-        
-        body.light-mode .primary-button-glow:hover {
-            /* Lighter shadow for light mode */
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
-            background-color: #d1d5db; /* Slightly darker light background on hover */
+
+        @keyframes glow-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-fab { 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 10; 
+            position: relative; 
         }
         
         /* Input styling fix */
@@ -312,16 +432,9 @@
             95% { transform: translateY(-1.2em); } /* Hold "Calibration" for 2s */
             100% { transform: translateY(0); } /* Transition back to "Service" */
         }
-        /* --------------------------------------------- */
-
-         
-          /* ------------------------------------------- */
-        /* --- CUSTOM CSS for SLIDER HOVER BUTTON --- */
-        /* ------------------------------------------- */
+        
         /* START HIGHLIGHT: CUSTOM CSS for SLIDER HOVER BUTTON */
         .social-slider-container {
-            /* The transition for the width is handled directly by Tailwind utility classes:
-               w-16 group-hover:w-[280px] */
             max-width: 100%; /* Ensure it respects parent width */
             transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Custom cubic-bezier for smooth slide */
             border-radius: 0.5rem; /* rounded-lg */
@@ -388,7 +501,7 @@
         /* HOVER EFFECTS: Expands, lifts shadow, hides icon, shows text */
         .nav-icon-button:hover {
             width: 120px; /* Expanded width */
-            color: var(--primary-color); 
+            color: var(--icon-color); 
             box-shadow: var(--neumorph-lift-shadow);
             transform: scale(1.02); 
         }
@@ -414,20 +527,70 @@
             box-shadow: var(--neumorph-inset-shadow); /* Use inset shadow to make it look pressed */
             transform: scale(0.98); /* Slightly shrink for deeper press feel */
             outline: none; /* Remove default browser outline */
-            color: var(--primary-color);
+            color: var(--icon-color);
         }
-        /* ------------------------------------------- */
+
+        .btn-glow-gradient {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
+        }
+        
+        /* Secondary variant (outline style but with glow) */
+        .btn-glow-gradient-outline {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-color);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.3s ease;
+        }
+        .btn-glow-gradient-outline::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: inherit;
+        }
+
+        .btn-glow-gradient::after, .btn-glow-gradient-outline::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end), var(--gradient-start));
+            background-size: 200% 200%;
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            filter: blur(12px);
+            transition: opacity 0.3s ease;
+            animation: glow-move 3s linear infinite;
+        }
+        
+        .btn-glow-gradient:hover::after, .btn-glow-gradient-outline:hover::after {
+            opacity: 0.7;
+        }
+        
+        .btn-glow-gradient:hover, .btn-glow-gradient-outline:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
         
     </style>
 </head>
 <body>
-
+    <div class="bg-gradient-layer"></div>
   
     <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50 bg-opacity-95 backdrop-blur-sm shadow-md" style="background-color: var(--card-bg);">
+    <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/5">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="#" class="text-2xl font-bold gradient-text">Shah Jalal</a>
+                <a href="#" class="text-2xl font-bold gradient-text">Shahjalal Shakil</a>
+                
                 
                 <!-- UPDATED: DESKTOP Nav Links and Theme Toggle (Visible on md and above) -->
                 <div class="hidden md:flex items-center space-x-3">
@@ -452,9 +615,13 @@
                         <i data-lucide="graduation-cap" class="nav-icon"></i>
                         <span class="icon-label">Qualifications</span>
                     </a>
+                    <a href="#gallery" class="nav-icon-button" title="Gallery">
+                        <i data-lucide="image" class="nav-icon"></i>
+                        <span class="icon-label">Gallery</span>
+                    </a>
                     <a href="#contact" class="nav-icon-button" title="Let's Talk">
                         <i data-lucide="mail" class="nav-icon"></i>
-                        <span class="icon-label">Let's Talk</span>
+                        <span class="icon-label">Reach Out</span>
                     </a>
 
                     <!-- Theme Toggle Button (Desktop) - Now Round -->
@@ -482,8 +649,8 @@
         </nav>
     </header>
 
-    
-     <!-- ADDED: Mobile Menu Overlay (Off-Canvas Menu) -->
+
+    <!-- ADDED: Mobile Menu Overlay (Off-Canvas Menu) -->
     <div id="mobile-menu" class="fixed inset-y-0 left-0 z-[100] transform -translate-x-full w-64 transition-transform duration-300 md:hidden shadow-2xl" style="background-color: var(--card-bg);">
         <div class="h-full flex flex-col">
             <!-- Menu Header -->
@@ -496,69 +663,64 @@
             <!-- Menu Links -->
             <div class="flex flex-col p-4 space-y-2 flex-grow overflow-y-auto">
                 <!-- UPDATED: Added class 'mobile-nav-link' for JS handling -->
-                <a href="#about" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">About</a>
-                <a href="#skills" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Skills</a>
-                <a href="#experience" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Experience</a>
-                <a href="#projects" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Projects</a>
+                <a href="#about" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Profile</a>
+                <a href="#skills" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Capabilities</a>
+                <a href="#experience" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Journey</a>
+                <a href="#projects" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Creations</a>
                 <a href="#education" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Education</a>
-                <a href="#contact" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Contact</a>
+                <a href="#gallery" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Gallery</a>
+                <a href="#contact" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Reach Out</a>
             </div>
             <div class="p-4 border-t" style="border-color: var(--border-color);">
-                <p class="text-sm text-gray-500">MD. Shah Jalal Mia</p>
+                <p class="text-sm text-gray-500">Shahjalal Shakil</p>
             </div>
         </div>
     </div>
 
-
-
+    
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-
-        <!-- 1. Hero / About Section -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- 1. About Me Section -->
         <section id="about" class="py-16 md:py-24 flex flex-col md:flex-row items-center gap-12 text-center md:text-left scroll-reveal" style="--delay: 0s;">
-            <div class="md:w-3/5">
-                <p class="text-xl font-medium text-blue-500 mb-3 scroll-reveal" style="--delay: 0.1s;">Welcome! I am</p>
-                <h1 class="text-5xl sm:text-7xl font-extrabold mb-6 leading-tight scroll-reveal" style="--delay: 0.2s;">
-                    Md. Shahjalal Shakil
-                </h1>
-                
-                <!-- Updated Title with Vertical Text Slider -->
-                <h2 class="sm:text-4xl font-semibold mb-6 scroll-reveal flex flex-row items-center justify-center text-left md:justify-start md:text-left gap-2" style="--delay: 0.3s;">
-                    Engineer 
-                    <!-- Vertical Text Slider Block starts here -->
-                    <span class="v-slider">
-                        <span class="v-slider__words">
-                            <!-- Words for the slider -->
-                            <span>Service</span>
-                            <span>Calibration</span>
-                        </span>
-                    </span>
-                    
-                    <!-- Vertical Text Slider Block ends here -->
-                </h2>
-                <!-- End Updated Title -->
-                
-                <p class="text-lg text-gray-400 light-mode:text-gray-600 mb-8 scroll-reveal" style="--delay: 0.4s;">
-                    My career objective is to obtain a challenging, long-term position that requires a strong sense of responsibility and commitment, allowing me to develop my skills and creativity. My expertise focuses on troubleshooting machinery, mechanical systems, electrical equipment, and providing textile testing and calibration services.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <!-- My Resume Button - Added primary-button-glow class for hover effect -->
-                    <a href="#" onclick="alert('This button is a placeholder. In a live portfolio, clicking this would download the CV file.');" class="inline-flex items-center primary-button-glow bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl light-mode:bg-gray-300 light-mode:text-gray-800 light-mode:hover:bg-gray-400 scroll-reveal" style="--delay: 0.5s;">
-                        My Resume <i data-lucide="download" class="w-5 h-5 ml-2"></i>
-                    </a>
-                </div>
-
-            </div>
-            <div class="md:w-2/5 flex justify-center scroll-reveal" style="--delay: 0.6s;">
-                <!-- Profile Image Placeholder/System -->
-                <div class="w-90 h-90 flex items-center justify-center">
-                    <img id="profile-picture" 
-                         class="profile-img" 
-                         src="https://i.postimg.cc/vZM0JTwF/Picsart-25-12-13-03-06-18-185.png" 
-                         alt="MD. Shah Jalal Mia Profile Picture"
-                         onerror="this.onerror=null; this.src='https://placehold.co/256x256/3B82F6/FFFFFF/png?text=Image+Unavailable';"
-                    >
+            <!-- Container with Spotlight Effect -->
+            <div id="about-container" class="rounded-2xl shadow-xl p-8 md:p-12 scroll-reveal" style="--delay: 0s;">
+                <div class="spotlight-glow"></div> 
+                <div class="about-content-inner p-8 md:p-16">
+                    <div class="flex flex-col md:flex-row items-center gap-12 text-center md:text-left">
+                        <div class="md:w-3/5">
+                            <p class="text-xl font-medium text-blue-500 mb-3 scroll-reveal" style="--delay: 0.1s;">Hey there! I am</p>
+                            <h1 class="text-5xl sm:text-7xl font-extrabold mb-6 leading-tight scroll-reveal gradient-text" style="--delay: 0.2s;">
+                                Shahjalal Shakil
+                            </h1>
+                            <h2 class="sm:text-4xl font-semibold mb-6 scroll-reveal flex flex-row items-center justify-center text-left md:justify-start md:text-left gap-2" style="--delay: 0.3s;">
+                                Engineer 
+                                <span class="v-slider">
+                                    <span class="v-slider__words">
+                                        <span>Service</span>
+                                        <span>Calibration</span>
+                                    </span>
+                                </span>
+                                
+                            </h2>
+                            <p class="text-lg text-gray-400 light-mode:text-gray-600 mb-8 scroll-reveal" style="--delay: 0.4s;">
+                                My career objective is to obtain a challenging, long-term position that requires a strong sense of responsibility and commitment, allowing me to develop my skills and creativity. My expertise focuses on troubleshooting machinery, mechanical systems, electrical equipment, and providing textile testing and calibration services.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                                <a href="#" onclick="alert('This button is a placeholder. In a live portfolio, clicking this would download the CV file.');" class="inline-flex items-center btn-glow-gradient bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl light-mode:bg-gray-300 light-mode:text-gray-800 light-mode:hover:bg-gray-400 scroll-reveal" style="--delay: 0s;">
+                                     My Resume <i data-lucide="download" class="w-5 h-5 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="md:w-2/5 flex justify-center scroll-reveal" style="--delay: 0.6s;">
+                            <div class="w-100 h-100 flex items-center justify-center">
+                                <img id="profile-picture" 
+                                 class="profile-img w-200 h-200 object-cover"  
+                                 src="https://i.postimg.cc/vZM0JTwF/Picsart-25-12-13-03-06-18-185.png" 
+                                 alt="MD. Shah Jalal Mia Profile Picture"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/256x256/3B82F6/FFFFFF/png?text=Image+Unavailable';">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -741,6 +903,95 @@
                 </div>
             </div>
         </section>
+         <!-- 5. Education Section -->
+        <section id="education" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <i data-lucide="graduation-cap" class="inline-block w-8 h-8 mr-3"></i> Educational Qualifications
+            </h3>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- Education 1 -->
+                <div class="p-6 card-glow scroll-reveal" style="--delay: 0.1s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2021 - 2025 (Continuing)</p>
+                    <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">BSc Engineer</h4>
+                    <p class="text-lg font-medium text-white light-mode:text-gray-900 mb-2">Electrical Electronics Engineering</p>
+                    <p class="text-gray-400 light-mode:text-gray-600">Dhaka International University</p>
+                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 3.25 (Out of 4.00)</p>
+                </div>
+
+                <!-- Education 2 -->
+                <div class="p-6 card-glow scroll-reveal" style="--delay: 0.2s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
+                    <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">Diploma in Electrical Engineering</h4>
+                    <p class="text-lg font-medium text-white light-mode:text-gray-900 mb-2">Electrical Technology</p>
+                    <p class="text-gray-400 light-mode:text-gray-600">Institute of Engineering & Technology, Rangpur</p>
+                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 2.99 (Out of 4.00)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Gallery Section (New - [নতুন যোগ করা হয়েছে]) -->
+        <section id="gallery" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal" style="--delay: 0s;">
+                <i data-lucide="image" class="inline-block w-8 h-8 mr-3"></i> Gallery
+            </h3>
+            <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Gallery Item 1 -->
+                <div class="card-glow scroll-reveal group overflow-hidden" style="--delay: 0.1s;">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://placehold.co/600x400/2563EB/FFFFFF?text=Calibration+Work" 
+                             alt="Calibration Service Photo" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">Precision Calibration</h4>
+                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Mechanical and thermal calibration according to ISO 17025 standards.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="card-glow scroll-reveal group overflow-hidden" style="--delay: 0.2s;">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Textile+Machinery+Service" 
+                             alt="Textile Machine Installation" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">Textile Equipment Setup</h4>
+                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Installation and commissioning of textile testing machinery.</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="card-glow scroll-reveal group overflow-hidden" style="--delay: 0.3s;">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Hands+on+Troubleshooting" 
+                             alt="Electrical Troubleshooting" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">System Troubleshooting</h4>
+                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Hands-on diagnosis of complex mechanical and electrical faults.</p>
+                    </div>
+                </div>
+
+                 <!-- Gallery Item 4 (Spanning for visual interest) -->
+                <div class="card-glow scroll-reveal group overflow-hidden sm:col-span-2 lg:col-span-1" style="--delay: 0.4s;">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://placehold.co/600x400/EF4444/FFFFFF?text=Professional+Training" 
+                             alt="Seminar/Training Photo" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">Continuous Learning</h4>
+                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Participating in technical workshops and professional training sessions.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        <!-- 6. Gallery Section (New - [নতুন যোগ করা হয়েছে]) শেষ -->
 
         <!-- 6. Contact Section (Updated) -->
         <section id="contact" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
@@ -807,8 +1058,8 @@
                         </div>
                         
                         <!-- Submit Button -->
-                        <button type="submit" class="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl">
-                            Send Message <i data-lucide="send" class="w-5 h-5 ml-2"></i>
+                        <button type="submit" class="w-full inline-flex items-center justify-center btn-glow-gradient text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl">
+                            Ping Me <i data-lucide="send" class="w-5 h-5 ml-2"></i>
                         </button>
 
                         <!-- Message Status Display -->
@@ -830,7 +1081,7 @@
                     
                    <!-- START HIGHLIGHT: Navigation fix. Changed <a> to <button> and removed href. -->
                     <!-- 'Connect' Icon/Button (Always Visible) -->
-                    <button type="button" class="w-16 h-16 flex items-center justify-center bg-blue-600 text-white font-bold flex-shrink-0 transition-colors duration-300 group-hover:bg-blue-700 hover:scale-105 focus:outline-none" title="Connect">
+                    <button type="button" class="w-16 h-16 flex items-center justify-center btn-glow-gradient text-white font-bold flex-shrink-0 transition-colors duration-300 group-hover:bg-blue-700 hover:scale-105 focus:outline-none" title="Connect">
                         <i data-lucide="move-right" class="w-6 h-6"></i>
                     </button>
                     <!-- END HIGHLIGHT: Navigation fix. Changed <a> to <button> and removed href. -->
@@ -875,7 +1126,7 @@
             
             <!-- Main 'Hire Me' button - Perfectly Circular (Used main-fab class) -->
             <!-- FAB is now styled purely via the .main-fab CSS hover for the glow effect -->
-            <a href="#contact" class="main-fab bg-blue-600 text-white font-semibold shadow-2xl">
+            <a href="#contact" class="main-fab fab-glow text-white font-semibold shadow-2xl">
                 <!-- Icon only now -->
                 <i data-lucide="briefcase" class="w-6 h-6"></i>
             </a>
@@ -891,6 +1142,20 @@
 
     <!-- RESTORED: JavaScript for Scroll Animation, Theme Toggle, Form Handling, and Circular Text -->
     <script>
+        const aboutContainer = document.getElementById('about-container');
+        if (aboutContainer) {
+            aboutContainer.addEventListener('mousemove', (e) => {
+                const rect = aboutContainer.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                // CSS variable update for both border and shadow
+                aboutContainer.style.setProperty('--mouse-x', `${x}%`);
+                aboutContainer.style.setProperty('--mouse-y', `${y}%`);
+            });
+        }
+
+
+
         // Firebase global variables are defined locally with default values
         var __app_id = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         var __firebase_config = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
@@ -925,6 +1190,9 @@
                 lucide.createIcons();
             }
         }
+        
+
+
         
         // Function to toggle theme and update both sets of icons
         function toggleTheme() {
@@ -1023,8 +1291,9 @@
             }, 5000);
         });
         // -----------------------------
+        
 
-  // --- Scroll Animation Logic (Updated for Re-triggering) ---
+        //  // --- Scroll Animation Logic (Updated for Re-triggering) ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
