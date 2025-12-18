@@ -31,29 +31,37 @@
             --bg-gradient-start: #100c1f; /* Darker Blue-Gray (almost black) */
             --bg-gradient-end: #081f2c;
             --spotlight-color: rgba(59, 130, 246, 0.15);
+            --spotlight-size: 300px;
+            --text-color-2: #00eaff;
             
 
         }
 
         body.light-mode {
             /* Light Mode Overrides */
-            --bg-color: #EAF6FF; /* Light gray background */
-            --text-color: #1F3B57; /* Dark text */
-            --card-bg: rgba(243, 244, 246, 0.8);
-            --primary-color: #2563EB;
+            --bg-color: #caebfb; /* Light gray background */
+            --text-color: #000000; /* Dark text */
+            --card-bg: rgba(240, 242, 243, 0.8);
+            --primary-color: rgba(0, 0, 0, 0.3);
             --icon-color:black; /* White card background */
-            --border-color: #4b5054; /* Light gray border */
-            --dot-border: #8e8e90; /* Matches light background */
+            --border-color: #4b5054;
+            --dot-color: #000000; /* Light gray border */
+            --dot-border: #000000; /* Matches light background */
             /* Neumorphism specific shadows (Light Mode) */
             --neumorph-inset-shadow: inset 5px 5px 10px #d9d9d9, inset -5px -5px 10px #ffffff;
             --neumorph-lift-shadow: 5px 5px 10px #d9d9d967, -5px -5px 10px #ffffff56;
             --gradient-start: #243748; /* Indigo 600 */
             --gradient-end: #4b749f;  /* Violet 600 */
-            --bg-gradient-start: #cfd9df; /* Very Light Gray */
-            --bg-gradient-end: #e4f4fc;
-            --spotlight-color: rgba(0, 0, 0, 0.3);  /* White */
+            --bg-gradient-start: #e9edef; /* Very Light Gray */
+            --bg-gradient-end: #d0ebf9;
+            --spotlight-color: rgba(0, 0, 0, 0.3);
+            --spotlight-size: 400px;
+            --text-color-2: #18030b;  /* White */
             
             
+        }
+        .text-color-2 {
+            color: var(--text-color-2);
         }
         
        
@@ -154,6 +162,50 @@
             position: relative;
             z-index: 2;
         }
+       .spotlight-card {
+            position: relative;
+            background-color: var(--card-bg); 
+            border-radius: 20px;
+            padding: 1px; /* বর্ডারের জন্য জায়গা */
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* কার্সার যেখানে থাকবে সেই বর্ডারটুকু উজ্জ্বল হবে */
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                var(--spotlight-size) circle at var(--mouse-x, 0) var(--mouse-y, 0),
+                var(--primary-color),
+                transparent 40%
+            );
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        /* কার্ডের ভিতরের কন্টেন্ট (যা বর্ডার ঢেকে দিবে না) */
+        .spotlight-content {
+            position: relative;
+            z-index: 1;
+            background-color: var(--card-bg);
+            border-radius: 19px;
+            height: 100%;
+            width: 100%;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-5px);
+        }
+        
         /* --- HIGHLIGHT: থিম বাটনকে গোলাকার করার জন্য CSS পরিবর্তন --- */
         #theme-toggle-desktop, #theme-toggle-mobile {
             /* HIGHLIGHT: বাটনটিকে নিখুঁত বৃত্ত (perfect circle) তৈরি করা হয়েছে */
@@ -731,40 +783,55 @@
             <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
                 <i data-lucide="zap" class="inline-block w-8 h-8 mr-3"></i> My Expertise
             </h3>
+
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Technical Skills -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
-                    <h4 class="text-2xl font-semibold mb-4 text-green-400 flex items-center light-mode:text-green-600"><i data-lucide="wrench" class="w-6 h-6 mr-3"></i> Technical Skills</h4>
-                    <ul class="space-y-3 text-gray-300 light-mode:text-gray-700">
-                        <li>ISO/ISE 17025:2017 Calibration (Mechanical, Electro Technical, Thermal)</li>
-                        <li>Textile Testing Machine Installation & Servicing</li>
-                        <li>Maintenance of Electrolux Washer, Dryer, Ironing Machines</li>
-                        <li>Solar Electrical System (NTVQF Level-1 & 2)</li>
-                        <li>Servicing of KURISH, Algotex, ZSK Machines (MastTech)</li>
-                    </ul>
+                <div class="spotlight-card scroll-reveal">
+                    <div class="spotlight-content">
+                        <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="wrench" class="text-blue-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold gradient-text mb-4">Technical Expertise</h4>
+                        <ul class="list-disc list-inside text-black-300 space-y-3 light-mode:text-black-700">
+                            <li>Mechanical & Electrical Troubleshooting</li>
+                            <li>Textile Testing Equipment Operation</li>
+                            <li>Calibration of Industrial & Laboratory Instruments</li>
+                            <li>Preventive & Corrective Maintenance</li>
+                            <li>Quality Control & Assurance Procedures</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Computer Literacy -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
-                    <h4 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center light-mode:text-purple-600"><i data-lucide="monitor" class="w-6 h-6 mr-3"></i> Computer Literacy</h4>
-                    <ul class="space-y-3 text-gray-300 light-mode:text-gray-700">
+                <div class="spotlight-card scroll-reveal" style="transition-delay: 0.1s;">
+                    <div class="spotlight-content">
+                        <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="monitor" class="text-purple-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold gradient-text mb-4">Digital Literacy
+                        </h4>
+                        <ul class="list-disc list-inside text-black-300 space-y-3 light-mode:text-black-700">
                         <li>Ms-Word, Ms-Excel, Ms Power Point, Networking (LAN, WAN, Internet)</li>
                         <li>Photoshop, Illustrator, Video Editing, Android App Development</li>
-                        <li>Downloading & Software Install</li>
-                    </ul>
+                        <li>Downloading & Software Install</li></ul>
+                    </div>
                 </div>
 
                 <!-- Core Competencies -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.3s;">
-                    <h4 class="text-2xl font-semibold mb-4 text-yellow-400 flex items-center light-mode:text-yellow-600"><i data-lucide="shield-check" class="w-6 h-6 mr-3"></i> Core Competencies</h4>
-                    <ul class="list-disc list-inside text-gray-300 space-y-3 light-mode:text-gray-700">
+                <div class="spotlight-card scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="spotlight-content">
+                        <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="shield-check" class="text-green-500"></i>
+                        </div>
+                        <h4 class="text-xl font-bold gradient-text mb-4">Quality & Standards</h4>
+                         <ul class="list-disc list-inside text-black-300 space-y-3 light-mode:text-black-700">
                         <li>Troubleshooting & Root Cause Analysis</li>
                         <li>Quality Assurance (QA) & Management</li>
                         <li>ISO and ASTM Testing Standards</li>
                         <li>Recruitment & Selection Process Management</li>
-                        <li>Digital Marketing (Learning and Earning Development Project)</li>
-                    </ul>
+                        <li>Digital Marketing (Learning and Earning Development Project)</li></ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -778,10 +845,10 @@
                 
                 <!-- Job 1: Farabi Corporation (Latest) -->
                 <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.1s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">July 2024 - Present</p>
-                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Engineer (Service & Calibration)</h4>
-                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Farabi Corporation</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                    <p class="text-sm font-medium text-black-400 light-mode:text-black-500">July 2024 - Present</p>
+                    <h4 class="text-3xl font-bold gradient-text">Engineer (Service & Calibration)</h4>
+                    <p class="text-lg text-color-2 mb-2 font-bold  ">Farabi Corporation</p>
+                    <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
                         <li>Diagnosing and resolving mechanical and electrical issues.</li>
                         <li>Installation, servicing, and maintenance of textile testing and laundry systems.</li>
                         <li>Ensuring calibration compliance for industrial and laboratory equipment.</li>
@@ -790,10 +857,10 @@
 
                 <!-- Job 2: SmartCare Solution Ltd. -->
                 <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.2s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">February 2023 - June 2024</p>
-                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Asst. Engineer (Service & Calibration)</h4>
-                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">SmartCare Solution Ltd.</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                    <p class="text-sm font-medium text-black-400 light-mode:text-black-500">February 2023 - June 2024</p>
+                    <h4 class="text-3xl font-bold gradient-text">Asst. Engineer (Service & Calibration)</h4>
+                    <p class="text-lg text-color-2 mb-2 font-bold">SmartCare Solution Ltd.</p>
+                    <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
                         <li>Providing prompt and effective solutions for technical machine problems.</li>
                         <li>Maintaining high standards for calibration services.</li>
                         <li>Assisting in recruitment and selection processes.</li>
@@ -802,10 +869,10 @@
 
                 <!-- Job 3: MastTech International Ltd -->
                 <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.3s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">June 2022 - February 2023</p>
-                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Service Engineer</h4>
-                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">MastTech International Ltd</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                    <p class="text-sm font-medium text-black-400 light-mode:text-black-500">June 2022 - February 2023</p>
+                    <h4 class="text-3xl font-bold gradient-text">Service Engineer</h4>
+                    <p class="text-lg text-color-2 mb-2 font-bold">MastTech International Ltd</p>
+                    <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
                         <li>Servicing and troubleshooting KURISH, Algotex, and ZSK machines.</li>
                         <li>Delivering calibration services for industrial equipment.</li>
                     </ul>
@@ -813,10 +880,10 @@
 
                 <!-- Job 4: Bangladesh Material Testing Laboratory (BMTL) -->
                 <div class="timeline-item pb-0 scroll-reveal" style="--delay: 0.4s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">October 2019 - June 2022</p>
-                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Lab Technician</h4>
-                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Bangladesh Material Testing Laboratory (BMTL)</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 light-mode:text-gray-600">
+                    <p class="text-sm font-medium text-black-400 light-mode:text-black-500">October 2019 - June 2022</p>
+                    <h4 class="text-3xl font-bold gradient-text">Lab Technician</h4>
+                    <p class="text-lg text-color-2 mb-2 font-bold">Bangladesh Material Testing Laboratory (BMTL)</p>
+                    <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
                         <li>Managing all technical operations of the laboratory.</li>
                         <li>Operating, maintaining, and preparing reports for lab machines, ensuring Quality Assurance.</li>
                         <li>Developing quality manual, quality checklist, SOP etc.</li>
@@ -838,7 +905,7 @@
                 
                 <!-- Project 1: Calibration Management System -->
                 <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
-                    <h4 class="text-2xl font-semibold mb-3 text-blue-300 light-mode:text-blue-700">ISO 17025 Calibration System Setup</h4>
+                    <h4 class="text-2xl font-bold mb-3 gradient-text">ISO 17025 Calibration System Setup</h4>
                     <p class="text-sm text-gray-500 mb-4">Quality Assurance & Compliance</p>
                     <p class="text-gray-400 light-mode:text-gray-600 text-sm">
                         Led the implementation and maintenance of the ISO/IEC 17025:2017 quality standard for mechanical, electro-technical, and thermal calibration services at client sites.
@@ -878,33 +945,9 @@
             </div>
         </section>
 
-        <!-- 5. Education Section -->
-        <section id="education" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
-            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
-                <i data-lucide="graduation-cap" class="inline-block w-8 h-8 mr-3"></i> Educational Qualifications
-            </h3>
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                
-                <!-- Education 1 -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2021 - 2025 (Continuing)</p>
-                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">BSc Engineer</h4>
-                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Electrical Electronics Engineering</p>
-                    <p class="text-gray-400 light-mode:text-gray-600">Dhaka International University</p>
-                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 3.25 (Out of 4.00)</p>
-                </div>
 
-                <!-- Education 2 -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
-                    <h4 class="text-2xl font-semibold text-blue-300 mt-1 light-mode:text-blue-700">Diploma in Electrical Engineering</h4>
-                    <p class="text-lg font-medium text-white mb-2 light-mode:text-gray-900">Electrical Technology</p>
-                    <p class="text-gray-400 light-mode:text-gray-600">Institute of Engineering & Technology, Rangpur</p>
-                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 2.99 (Out of 4.00)</p>
-                </div>
-            </div>
-        </section>
-         <!-- 5. Education Section -->
+
+        <!-- 5. Education Section -->
         <section id="education" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
             <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
                 <i data-lucide="graduation-cap" class="inline-block w-8 h-8 mr-3"></i> Educational Qualifications
@@ -921,6 +964,14 @@
                 </div>
 
                 <!-- Education 2 -->
+                <div class="p-6 card-glow scroll-reveal" style="--delay: 0.2s;">
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
+                    <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">Diploma in Electrical Engineering</h4>
+                    <p class="text-lg font-medium text-white light-mode:text-gray-900 mb-2">Electrical Technology</p>
+                    <p class="text-gray-400 light-mode:text-gray-600">Institute of Engineering & Technology, Rangpur</p>
+                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 2.99 (Out of 4.00)</p>
+                </div>
+                <!-- Education 3 -->
                 <div class="p-6 card-glow scroll-reveal" style="--delay: 0.2s;">
                     <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
                     <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">Diploma in Electrical Engineering</h4>
@@ -1002,8 +1053,9 @@
             <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
                 
                 <!-- Left Side: Contact Information -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
-                    <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Contact Information</h4>
+                <div class="spotlight-card scroll-reveal" style="--delay: 0.1s;">
+                    <div class="spotlight-content">
+                        <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Contact Information</h4>
                     
                     <div class="space-y-6">
                         <!-- Phone -->
@@ -1032,14 +1084,16 @@
                                 <p class="text-gray-300 light-mode:text-gray-700">House #35, Road #12, Sector #12, Uttara, Dhaka-1230</p>
                             </div>
                         </div>
+                         </div>
                     </div>
                 </div>
 
                 <!-- Right Side: Contact Form -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
-                    <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Send a Message</h4>
+                <div class="spotlight-card scroll-reveal" style="--delay: 0.2s;">
+                    <div class="spotlight-content">
+                        <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Send a Message</h4>
                     
-                    <form id="contact-form" class="space-y-4">
+                         <form id="contact-form" class="space-y-4">
                         <!-- Name Input -->
                         <div>
                             <label for="name" class="block text-sm font-medium mb-1">Name</label>
@@ -1065,7 +1119,8 @@
 
                         <!-- Message Status Display -->
                         <div id="form-status" class="mt-4 p-3 rounded text-sm hidden"></div>
-                    </form>
+                         </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1154,6 +1209,19 @@
                 aboutContainer.style.setProperty('--mouse-y', `${y}%`);
             });
         }
+        // Spotlight Effect Logic for Cards
+        const handleMouseMove = e => {
+            const cards = document.getElementsByClassName("spotlight-card");
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect(),
+                x = e.clientX - rect.left,
+                y = e.clientY - rect.top;
+
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        };
+        document.addEventListener("mousemove", handleMouseMove);
 
 
 
