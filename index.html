@@ -31,8 +31,10 @@
             --bg-gradient-start: #100c1f; /* Darker Blue-Gray (almost black) */
             --bg-gradient-end: #081f2c;
             --spotlight-color: rgba(59, 130, 246, 0.15);
-            --spotlight-size: 300px;
+            --spotlight-size: 400px;
             --text-color-2: #00eaff;
+            --nav-button-bg: rgba(17, 24, 39, 0.7);
+           
             
 
         }
@@ -41,28 +43,31 @@
             /* Light Mode Overrides */
             --bg-color: #caebfb; /* Light gray background */
             --text-color: #000000; /* Dark text */
-            --card-bg: rgba(240, 242, 243, 0.8);
-            --primary-color: rgba(0, 0, 0, 0.3);
+            --card-bg: rgba(226, 252, 250, 0.8); /* Semi-transparent white card background */
+            --primary-color: #00a6ff;
             --icon-color:black; /* White card background */
             --border-color: #4b5054;
-            --dot-color: #000000; /* Light gray border */
-            --dot-border: #000000; /* Matches light background */
+            --dot-color: #000909; /* Light gray border */
+            --dot-border: #00000098; /* Matches light background */
             /* Neumorphism specific shadows (Light Mode) */
-            --neumorph-inset-shadow: inset 5px 5px 10px #d9d9d9, inset -5px -5px 10px #ffffff;
-            --neumorph-lift-shadow: 5px 5px 10px #d9d9d967, -5px -5px 10px #ffffff56;
+            --neumorph-inset-shadow: inset 5px 5px 5px #a1a1a1, inset -5px -5px 5px #ffffff;
+            --neumorph-lift-shadow: 4px 4px 10px #8f8f8f, -4px -4px 10px #ffffff;
             --gradient-start: #243748; /* Indigo 600 */
             --gradient-end: #4b749f;  /* Violet 600 */
             --bg-gradient-start: #e9edef; /* Very Light Gray */
             --bg-gradient-end: #d0ebf9;
-            --spotlight-color: rgba(0, 0, 0, 0.3);
+            --spotlight-color: rgba(0, 0, 0, 0.516);
             --spotlight-size: 400px;
-            --text-color-2: #18030b;  /* White */
+            --text-color-2: #2600ff;
+            --nav-button-bg:#cacaca;
+            
             
             
         }
         .text-color-2 {
             color: var(--text-color-2);
         }
+        
         
        
 
@@ -96,8 +101,15 @@
         }
         
         body.light-mode .bg-gradient-layer {
-            background-color: #ffffff;
-            background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(59, 130, 246, 0.15), rgba(255, 255, 255, 0));
+            position: fixed; /* Screen scroll korleo eita fixed thakbe */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Sob kichur niche thakbe */
+            pointer-events: none;
+            background-color: #d9f3f9;
+            background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(189, 213, 245, 0.214), rgba(206, 228, 241, 0.345));
         }
 
        #about-container {
@@ -166,7 +178,7 @@
             position: relative;
             background-color: var(--card-bg); 
             border-radius: 20px;
-            padding: 1px; /* বর্ডারের জন্য জায়গা */
+            padding: 1.5px; /* বর্ডারের জন্য জায়গা */
             overflow: hidden;
             transition: transform 0.3s ease;
         }
@@ -179,7 +191,7 @@
             background: radial-gradient(
                 var(--spotlight-size) circle at var(--mouse-x, 0) var(--mouse-y, 0),
                 var(--primary-color),
-                transparent 40%
+                transparent 80%
             );
             z-index: 0;
             opacity: 0;
@@ -205,6 +217,47 @@
         .spotlight-card:hover {
             transform: translateY(-5px);
         }
+        .spotlight-inner {
+            position: relative;
+            z-index: 1;
+            background-color: var(--card-bg);
+            border-radius: 23px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            backdrop-filter: blur(12px);
+        }
+        /* Spotlight on Text */
+        .spotlight-text {
+            position: relative;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            color:rgba(255, 255, 255, 0.1); /* Default low opacity */
+            background: radial-gradient(
+                200px circle at var(--mouse-x-inner, 0) var(--mouse-y-inner, 0),
+                var(--primary-color) 0%,
+                var(--gradient-start) 30%,
+                rgba(255, 255, 255, 0.1) 70%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: background 0.1s ease;
+        }
+
+        body.light-mode .spotlight-text {
+            color: rgba(0, 0, 0, 0.05);
+            background: radial-gradient(
+                200px circle at var(--mouse-x-inner, 0) var(--mouse-y-inner, 0),
+                var(--primary-color) 0%,
+                var(--gradient-end) 30%,
+                rgba(0, 0, 0, 0.05) 70%
+            );
+            -webkit-background-clip: text;
+        }
         
         /* --- HIGHLIGHT: থিম বাটনকে গোলাকার করার জন্য CSS পরিবর্তন --- */
         #theme-toggle-desktop, #theme-toggle-mobile {
@@ -212,7 +265,7 @@
             width: 36px;
             height: 36px;
             position: relative;
-            background-color: var(--card-bg); 
+            background-color: var(--nav-button-bg); 
             border: 1px solid var(--border-color); 
             border-radius: 50%; /* HIGHLIGHT: বৃত্তাকার শেপ */
             padding: 0; 
@@ -517,7 +570,7 @@
             border-radius: 9999px; 
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Controls the width expansion */
             color: var(--text-color);
-            background-color: var(--card-bg); 
+            background-color: var(--nav-button-bg); 
             overflow: hidden; 
             white-space: nowrap; 
             cursor: pointer;
@@ -632,6 +685,8 @@
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
+
+
         
     </style>
 </head>
@@ -680,7 +735,7 @@
                     <!-- Theme Toggle Button (Desktop) - Now Round -->
                     <button id="theme-toggle-desktop" class="focus:outline-none" title="Toggle Theme">
                         <div id="switch-icon-desktop" class="switch-icon-container">
-                            <i data-lucide="sun" class="w-4 h-4 text-gray-400 light-mode:text-yellow-600" id="theme-icon-desktop"></i>
+                            <i data-lucide="sun" class="w-4 h-4 text-black-400 light-mode:text-yellow-600" id="theme-icon-desktop"></i>
                         </div>
                     </button>
                 </div>
@@ -759,7 +814,7 @@
                                 My career objective is to obtain a challenging, long-term position that requires a strong sense of responsibility and commitment, allowing me to develop my skills and creativity. My expertise focuses on troubleshooting machinery, mechanical systems, electrical equipment, and providing textile testing and calibration services.
                             </p>
                             <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                                <a href="#" onclick="alert('This button is a placeholder. In a live portfolio, clicking this would download the CV file.');" class="inline-flex items-center btn-glow-gradient bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl light-mode:bg-gray-300 light-mode:text-gray-800 light-mode:hover:bg-gray-400 scroll-reveal" style="--delay: 0s;">
+                                <a href="https://drive.google.com/file/d/1jCLLTaJxxg5dxN-tFO2HYnS9JsTMJZ56/view?usp=sharing" onclick="alert('Do You Want To Download the CV File?');" class="inline-flex items-center btn-glow-gradient bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl light-mode:bg-gray-300 light-mode:text-gray-800 light-mode:hover:bg-gray-400 scroll-reveal" style="--delay: 0s;">
                                      My Resume <i data-lucide="download" class="w-5 h-5 ml-2"></i>
                                 </a>
                             </div>
@@ -897,51 +952,30 @@
         </section>
 
         <!-- 4. Projects Section -->
-        <section id="projects" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
-            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
-                <i data-lucide="folder-check" class="inline-block w-8 h-8 mr-3"></i> Projects & Key Achievements
-            </h3>
-            <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                
-                <!-- Project 1: Calibration Management System -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.1s;">
-                    <h4 class="text-2xl font-bold mb-3 gradient-text">ISO 17025 Calibration System Setup</h4>
-                    <p class="text-sm text-gray-500 mb-4">Quality Assurance & Compliance</p>
-                    <p class="text-gray-400 light-mode:text-gray-600 text-sm">
-                        Led the implementation and maintenance of the ISO/IEC 17025:2017 quality standard for mechanical, electro-technical, and thermal calibration services at client sites.
+        <section id="projects" class="py-24 border-t border-white/5">
+            <div class="text-center mb-16 scroll-reveal">
+                <h3 class="text-3xl font-black uppercase tracking-widest"><span class="gradient-text">Projects</span></h3>
+            </div>
+            
+            <div class="max-w-4xl mx-auto spotlight-card scroll-reveal">
+                <div class="spotlight-inner" id="spotlight-trigger">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="lock" class="text-blue-500 w-8 h-8"></i>
+                    </div>
+                    
+                    <!-- THE SPOTLIGHT TEXT -->
+                    <h2 class="spotlight-text">Coming Soon!</h2>
+                    
+                    <p class="text-white-500 light-mode:text-black-800 font-medium mt-6 text-center max-sm">
+                        Currently focused on developing innovative solutions in textile laboratory machinery servicing. Detailed project showcases and case studies will be featured here soon, highlighting successful installations, complex troubleshooting achievements, and advanced calibration projects.
                     </p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">ISO 17025</span>
-                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Quality Management</span>
+                    
+                    <div class="mt-10 flex gap-3">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></span>
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
                     </div>
                 </div>
-
-                <!-- Project 2: Textile Machine Installation -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.2s;">
-                    <h4 class="text-2xl font-semibold mb-3 text-blue-300 light-mode:text-blue-700">Textile Lab Equipment Commissioning</h4>
-                    <p class="text-sm text-gray-500 mb-4">Installation & Servicing</p>
-                    <p class="text-gray-400 light-mode:text-gray-600 text-sm">
-                        Managed the complete installation, commissioning, and regular maintenance of industrial textile testing and laundry equipment, including Electrolux Washer/Dryer units.
-                    </p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Electrolux</span>
-                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Troubleshooting</span>
-                    </div>
-                </div>
-
-                <!-- Project 3: Technical Documentation Development -->
-                <div class="p-6 rounded-xl card-glow scroll-reveal" style="--delay: 0.3s;">
-                    <h4 class="text-2xl font-semibold mb-3 text-blue-300 light-mode:text-blue-700">Standard Operating Procedure (SOP) Creation</h4>
-                    <p class="text-sm text-gray-500 mb-4">Documentation & Process Flow</p>
-                    <p class="text-gray-400 light-mode:text-gray-600 text-sm">
-                        Developed comprehensive quality manuals, checklists, and SOPs for the Bangladesh Material Testing Laboratory (BMTL) to standardize testing and calibration procedures.
-                    </p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">Documentation</span>
-                        <span class="text-xs px-2 py-1 bg-gray-700 rounded light-mode:bg-gray-200 light-mode:text-gray-800">QA</span>
-                    </div>
-                </div>
-
             </div>
         </section>
 
@@ -1055,7 +1089,7 @@
                 <!-- Left Side: Contact Information -->
                 <div class="spotlight-card scroll-reveal" style="--delay: 0.1s;">
                     <div class="spotlight-content">
-                        <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Contact Information</h4>
+                        <h4 class="text-3xl font-bold mb-6 gradient-text">Contact Information</h4>
                     
                     <div class="space-y-6">
                         <!-- Phone -->
@@ -1063,7 +1097,7 @@
                             <i data-lucide="phone" class="w-6 h-6 text-blue-400 mr-4 mt-1 flex-shrink-0"></i>
                             <div>
                                 <p class="font-semibold text-lg">Phone</p>
-                                <a href="tel:+8801705864333" class="text-gray-300 hover:text-blue-400 transition light-mode:text-gray-700">+8801705864333</a>
+                                <a href="tel:+8801705864333" class="text-black-300 hover:text-blue-400 transition light-mode:text-black-700">+8801705864333</a>
                             </div>
                         </div>
 
@@ -1072,7 +1106,7 @@
                             <i data-lucide="at-sign" class="w-6 h-6 text-blue-400 mr-4 mt-1 flex-shrink-0"></i>
                             <div>
                                 <p class="font-semibold text-lg">Email</p>
-                                <a href="mailto:shahjalalshakil76@gmail.com" class="text-gray-300 hover:text-blue-400 transition light-mode:text-gray-700">shahjalalshakil76@gmail.com</a>
+                                <a href="mailto:shahjalalshakil76@gmail.com" class="text-black-300 hover:text-blue-400 transition light-mode:text-black-700">shahjalalshakil76@gmail.com</a>
                             </div>
                         </div>
 
@@ -1081,7 +1115,7 @@
                             <i data-lucide="map-pin" class="w-6 h-6 text-blue-400 mr-4 mt-1 flex-shrink-0"></i>
                             <div>
                                 <p class="font-semibold text-lg">Location</p>
-                                <p class="text-gray-300 light-mode:text-gray-700">House #35, Road #12, Sector #12, Uttara, Dhaka-1230</p>
+                                <p class="text-black-300 light-mode:text-black-700">House #35, Road #12, Sector #12, Uttara, Dhaka-1230</p>
                             </div>
                         </div>
                          </div>
@@ -1091,7 +1125,7 @@
                 <!-- Right Side: Contact Form -->
                 <div class="spotlight-card scroll-reveal" style="--delay: 0.2s;">
                     <div class="spotlight-content">
-                        <h4 class="text-2xl font-semibold mb-6 text-blue-400 light-mode:text-blue-600">Send a Message</h4>
+                        <h4 class="text-3xl font-bold mb-6 gradient-text">Send a Message</h4>
                     
                          <form id="contact-form" class="space-y-4">
                         <!-- Name Input -->
@@ -1198,6 +1232,9 @@
 
     <!-- RESTORED: JavaScript for Scroll Animation, Theme Toggle, Form Handling, and Circular Text -->
     <script>
+        
+
+
         const aboutContainer = document.getElementById('about-container');
         if (aboutContainer) {
             aboutContainer.addEventListener('mousemove', (e) => {
@@ -1219,8 +1256,20 @@
 
                 card.style.setProperty("--mouse-x", `${x}px`);
                 card.style.setProperty("--mouse-y", `${y}px`);
+                const text = card.querySelector('.spotlight-text');
+                if (text) {
+                    const textRect = text.getBoundingClientRect();
+                    const tx = e.clientX - textRect.left;
+                    const ty = e.clientY - textRect.top;
+                    text.style.setProperty("--mouse-x-inner", `${tx}px`);
+                    text.style.setProperty("--mouse-y-inner", `${ty}px`);
+                }
+                
             }
+            
+            
         };
+       
         document.addEventListener("mousemove", handleMouseMove);
 
 
