@@ -30,10 +30,11 @@
             --gradient-end: #3B82F6;  /* Blue 500 (উজ্জ্বল নীল) */
             --bg-gradient-start: #100c1f; /* Darker Blue-Gray (almost black) */
             --bg-gradient-end: #081f2c;
-            --spotlight-color: rgba(59, 130, 246, 0.15);
+            --spotlight-color: rgba(59, 131, 246, 0.177);
             --spotlight-size: 400px;
             --text-color-2: #00eaff;
             --nav-button-bg: rgba(17, 24, 39, 0.7);
+            --card-gradientbg: rgba(17, 24, 39, 0.7);
            
             
 
@@ -43,8 +44,8 @@
             /* Light Mode Overrides */
             --bg-color: #caebfb; /* Light gray background */
             --text-color: #000000; /* Dark text */
-            --card-bg: rgba(226, 252, 250, 0.8); /* Semi-transparent white card background */
-            --primary-color: #00a6ff;
+            --card-bg: #f3f4f6; /* Semi-transparent white card background */
+            --primary-color: #4b749f;
             --icon-color:black; /* White card background */
             --border-color: #4b5054;
             --dot-color: #000909; /* Light gray border */
@@ -54,12 +55,14 @@
             --neumorph-lift-shadow: 4px 4px 10px #8f8f8f, -4px -4px 10px #ffffff;
             --gradient-start: #243748; /* Indigo 600 */
             --gradient-end: #4b749f;  /* Violet 600 */
-            --bg-gradient-start: #e9edef; /* Very Light Gray */
-            --bg-gradient-end: #d0ebf9;
-            --spotlight-color: rgba(0, 0, 0, 0.516);
+            --bg-gradient-start: #ddfbf8; /* Very Light Gray */
+            --bg-gradient-end: #b4eff9;
+            --spotlight-color: rgba(0, 255, 170, 0.215);
             --spotlight-size: 400px;
-            --text-color-2: #2600ff;
+            --text-color-2: #4F2FAD;
             --nav-button-bg:#cacaca;
+            
+
             
             
             
@@ -108,8 +111,8 @@
             height: 100%;
             z-index: -2; /* Sob kichur niche thakbe */
             pointer-events: none;
-            background-color: #d9f3f9;
-            background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(189, 213, 245, 0.214), rgba(206, 228, 241, 0.345));
+            background-color: #d1e1e4;
+            background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(193, 225, 247, 0.214), rgba(202, 243, 248, 0.345));
         }
 
        #about-container {
@@ -132,7 +135,7 @@
             z-index: -1;
             border-radius: 1rem;
             background: radial-gradient(
-                400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
                 var(--gradient-start), 
                 var(--gradient-end),
                 transparent 80%
@@ -151,7 +154,7 @@
             background: radial-gradient(
                 500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
                 var(--spotlight-color), 
-                transparent 70%
+                transparent 80%
             );
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -177,10 +180,11 @@
        .spotlight-card {
             position: relative;
             background-color: var(--card-bg); 
-            border-radius: 20px;
+            border-radius: 23px;
             padding: 1.5px; /* বর্ডারের জন্য জায়গা */
             overflow: hidden;
             transition: transform 0.3s ease;
+            box-shadow: #00000033 0px 4px 6px -1px, #0000001a 0px 2px 4px -1px;
         }
 
         /* কার্সার যেখানে থাকবে সেই বর্ডারটুকু উজ্জ্বল হবে */
@@ -207,7 +211,7 @@
             position: relative;
             z-index: 1;
             background-color: var(--card-bg);
-            border-radius: 19px;
+            border-radius: 23px;
             height: 100%;
             width: 100%;
             padding: 2rem;
@@ -226,8 +230,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 6rem 2rem;
+            padding: 1.5rem;
             backdrop-filter: blur(12px);
+            height: 100%;
+            overflow: hidden;
         }
         /* Spotlight on Text */
         .spotlight-text {
@@ -257,6 +263,30 @@
                 rgba(0, 0, 0, 0.05) 70%
             );
             -webkit-background-clip: text;
+        
+        }
+        .card-overlay {
+            position: absolute;
+            bottom: -100%; /* Shuru te niche thakbe */
+            left: 0;
+            width: 100%;
+            height: 30%; /* Card er ordhek height */
+            background: linear-gradient(to top, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            padding: 1.5rem;
+            color: white;
+            border-radius: 23px 23px 0 0;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Hover korle 50% niche overlay ta theme jabe, jate nicher part dekha jay */
+        .spotlight-card:hover .card-overlay {
+            bottom: 70%; 
         }
         
         /* --- HIGHLIGHT: থিম বাটনকে গোলাকার করার জন্য CSS পরিবর্তন --- */
@@ -685,6 +715,47 @@
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
+        .gallery-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding: 2rem 0;
+        }
+
+        .gallery-track {
+            display: flex;
+            width: calc(250px * 10); /* Adjust based on item width and count */
+            animation: scroll 40s linear infinite;
+        }
+
+        .gallery-track:hover {
+            animation-play-state: paused;
+        }
+
+        .gallery-item {
+            width: 300px;
+            flex-shrink: 0;
+            margin-right: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.9s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-332px * 5)); } /* width + margin * half of total items */
+        }
+
+
+        
+
 
 
         
@@ -904,9 +975,12 @@
                     <h4 class="text-3xl font-bold gradient-text">Engineer (Service & Calibration)</h4>
                     <p class="text-lg text-color-2 mb-2 font-bold  ">Farabi Corporation</p>
                     <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
-                        <li>Diagnosing and resolving mechanical and electrical issues.</li>
-                        <li>Installation, servicing, and maintenance of textile testing and laundry systems.</li>
-                        <li>Ensuring calibration compliance for industrial and laboratory equipment.</li>
+                        <li>Diagnose and troubleshoot technical issues in machinery, mechanical systems, and electrical appliances, ensuring timely and effective resolution.</li>
+                        <li>Install, service, and maintain textile testing machines and laundry systems, including Electrolux washers, dryers, and ironing machines.</li>
+                        <li>Conducting calibration services for various laboratory and industrial equipment to maintain accuracy and compliance with industry standards.</li>
+                        <li>Implement problem solving strategies to identify root causes, gather technical information, and implement sustainable solutions.</li>
+                        <li>Conduct recruitment and selection processes to meet organizational manpower requirements.</li>
+                        <li>Voluntarily travel to client sites and project locations, taking full responsibility for delivering assigned tasks and services.</li>
                     </ul>
                 </div>
 
@@ -916,9 +990,13 @@
                     <h4 class="text-3xl font-bold gradient-text">Asst. Engineer (Service & Calibration)</h4>
                     <p class="text-lg text-color-2 mb-2 font-bold">SmartCare Solution Ltd.</p>
                     <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
-                        <li>Providing prompt and effective solutions for technical machine problems.</li>
-                        <li>Maintaining high standards for calibration services.</li>
-                        <li>Assisting in recruitment and selection processes.</li>
+                        <li>Diagnose and troubleshoot technical issues in machinery, mechanical systems, and electrical appliances, ensuring timely and effective resolution.</li>
+                        <li>Install, service, and maintain textile testing machines and laundry systems, including Electrolux washers, dryers, and ironing machines.</li>
+                        <li>Conducting calibration services for various laboratory and industrial equipment to maintain accuracy and compliance with industry standards.</li>
+                        <li>Implement problem solving strategies to identify root causes, gather technical information, and implement sustainable solutions.</li>
+                        <li>Conduct recruitment and selection processes to meet organizational manpower requirements.</li>
+                        <li>Voluntarily travel to client sites and project locations, taking full responsibility for delivering assigned tasks and services.</li>
+                        <li>Managing Recruitment & Selection Process as per requirements</li>
                     </ul>
                 </div>
 
@@ -928,23 +1006,41 @@
                     <h4 class="text-3xl font-bold gradient-text">Service Engineer</h4>
                     <p class="text-lg text-color-2 mb-2 font-bold">MastTech International Ltd</p>
                     <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
-                        <li>Servicing and troubleshooting KURISH, Algotex, and ZSK machines.</li>
-                        <li>Delivering calibration services for industrial equipment.</li>
+                        <li>Diagnose and troubleshoot technical issues in machinery, mechanical systems, and electrical appliances, ensuring timely and effective resolution.</li>
+                        <li>Install, service, and maintain textile testing machines and laundry systems, includingKURISH (Auto cutter, Spreading Machine), Algotex (Cutter-Plotter, Plotter), ZSK(Embroidery).</li>
+                        <li>Conducting calibration services for various laboratory and industrial equipment to maintain accuracy and compliance with industry standards.</li>
+                        <li>Implement problem solving strategies to identify root causes, gather technical information, and implement sustainable solutions.</li>
+                        <li>Conduct recruitment and selection processes to meet organizational manpower requirements.</li>
+                        <li>Voluntarily travel to client sites and project locations, taking full responsibility for delivering assigned tasks and services. </li>
                     </ul>
                 </div>
 
                 <!-- Job 4: Bangladesh Material Testing Laboratory (BMTL) -->
-                <div class="timeline-item pb-0 scroll-reveal" style="--delay: 0.4s;">
+                <div class="timeline-item pb-10 scroll-reveal" style="--delay: 0.4s;">
                     <p class="text-sm font-medium text-black-400 light-mode:text-black-500">October 2019 - June 2022</p>
                     <h4 class="text-3xl font-bold gradient-text">Lab Technician</h4>
                     <p class="text-lg text-color-2 mb-2 font-bold">Bangladesh Material Testing Laboratory (BMTL)</p>
                     <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
-                        <li>Managing all technical operations of the laboratory.</li>
-                        <li>Operating, maintaining, and preparing reports for lab machines, ensuring Quality Assurance.</li>
+                        <li>Responsible for all technical operation of the Laboratory.</li>
+                        <li>Lab machine operating, hardware and software installation, maintenance, Inventory, Quality assurance, report making.</li>
                         <li>Developing quality manual, quality checklist, SOP etc.</li>
                         <li>Supervising tests and calibrations according to ISO and ASTM Testing standards.</li>
-                        <li>Maintaining company's confidential Documents.</li>
-                        <li>Time to time follow up & decision taken for quick support on maintenance purpose to management. (From CV)</li>
+                        <li>Conducted ISO and ASTM Testing standard, and prepared engineering testing report.</li>
+                        <li>Maintaining company’s confidential Documents. </li>
+                        <li>Time to time follow up & decision taken for quick support on maintenance purpose to management.</li>
+                    </ul>
+                </div>
+                <!-- Job 5: Industrial Training -->
+                <div class="timeline-item pb-0 scroll-reveal" style="--delay: 0.5s;">
+                    <p class="text-sm font-medium text-black-400 light-mode:text-black-500">February2019 - April 2019</p>
+                    <h4 class="text-3xl font-bold gradient-text">Industrial Training</h4>
+                    <p class="text-lg text-color-2 mb-2 font-bold  ">Impress-Newtex Composite Textiles Ltd.</p>
+                    <ul class="list-disc list-inside text-black-400 space-y-1 light-mode:text-black-600">
+                        <li>Understanding Training Course on ISO/ISE 17025:2017 Bangladesh Accreditation Board (BAB), Ministry of Industries.</li>
+                        <li>Technical Training Course for Calibration on Mechanical, Electro Technical,Thermal Instruments under ISO/ISE 17025:2017, Easterin Calibrators, 58/3, Prince Anwar Shah Rd, Kolkata, India.</li>
+                        <li>Have a good Work knowledge and experience on Solar Electrical System under National Technical & Vocational Qualification Frame Work (NTVQF) Level- 1 and Level-2.</li>
+                        <li>Have a good Work knowledge and experience on The National Standard Basic (360 Hrs.) 6 Month Course in Computer Office Application. Grade-(A) Out of (A+).</li>
+                        <li>Have a good Work knowledge and experience on Professional Outsourcing Training on Digital Marketing conducted by the Learning and Earning Development Project. (ICT Division).</li>
                     </ul>
                 </div>
 
@@ -954,7 +1050,9 @@
         <!-- 4. Projects Section -->
         <section id="projects" class="py-24 border-t border-white/5">
             <div class="text-center mb-16 scroll-reveal">
-                <h3 class="text-3xl font-black uppercase tracking-widest"><span class="gradient-text">Projects</span></h3>
+                <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                    <i data-lucide="folder-check" class="inline-block w-8 h-8 mr-3"></i> Projects
+                </h3>
             </div>
             
             <div class="max-w-4xl mx-auto spotlight-card scroll-reveal">
@@ -983,101 +1081,177 @@
 
         <!-- 5. Education Section -->
         <section id="education" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
-            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
-                <i data-lucide="graduation-cap" class="inline-block w-8 h-8 mr-3"></i> Educational Qualifications
-            </h3>
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                
-                <!-- Education 1 -->
-                <div class="p-6 card-glow scroll-reveal" style="--delay: 0.1s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2021 - 2025 (Continuing)</p>
-                    <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">BSc Engineer</h4>
-                    <p class="text-lg font-medium text-white light-mode:text-gray-900 mb-2">Electrical Electronics Engineering</p>
-                    <p class="text-gray-400 light-mode:text-gray-600">Dhaka International University</p>
-                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 3.25 (Out of 4.00)</p>
+            <div class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                    <i data-lucide="graduation-cap" class="inline-block gradient-text h-8 mr-3"></i> Qualifications
+
+                </h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Education Card 1 -->
+                <div class="spotlight-card scroll-reveal" style="transition-delay: 0.1s">
+                    <div class="spotlight-inner p-10 text-center">
+                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="award" class="text-blue-500 w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-bold  uppercase tracking-widest mb-2">Bachelor In Science</span>
+                        <h4 class="text-xl text-color-2 font-bold mb-3">BSc Engineer</h4>
+                        <p class=" text-sm text-color-2 leading-relaxed mb-4">Electrical Electronics Engineering(EEE)</p>
+                        
+                        <div class="mt-auto pt-6 border-t border-white/5 w-full">
+                            <span class="text-color-2 font-bold">Dhaka International University</span>
+                        </div>
+
+                        <!-- Half Slide-up Overlay -->
+                        <div class="card-overlay">
+                            <h5 class="text-lg font-bold">3.25 (Out of 4)</h5>
+                            <p class="text-xs text-blue-100 text-center mt-2 px-2">Duration of Course 4 Years (2025)</p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Education 2 -->
-                <div class="p-6 card-glow scroll-reveal" style="--delay: 0.2s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
-                    <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">Diploma in Electrical Engineering</h4>
-                    <p class="text-lg font-medium text-white light-mode:text-gray-900 mb-2">Electrical Technology</p>
-                    <p class="text-gray-400 light-mode:text-gray-600">Institute of Engineering & Technology, Rangpur</p>
-                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 2.99 (Out of 4.00)</p>
+                <!-- Education Card 2 -->
+                <div class="spotlight-card scroll-reveal" style="transition-delay: 0.1s">
+                    <div class="spotlight-inner p-10 text-center">
+                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="award" class="text-blue-500 w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-bold  uppercase tracking-widest mb-2">Diploma in Engineering</span>
+                        <h4 class="text-xl text-color-2 font-bold mb-3">Electrical Technology</h4>
+                        <p class=" text-sm text-color-2 leading-relaxed mb-4">Diploma in Electrical Engineering</p>
+                        
+                        <div class="mt-auto pt-6 border-t border-white/5 w-full">
+                            <span class="text-color-2 font-bold">IET,Rangpur</span>
+                        </div>
+
+                        <!-- Half Slide-up Overlay -->
+                        <div class="card-overlay">
+                            <h5 class="text-lg font-bold">2.99 (Out of 4.00)</h5>
+                            <p class="text-xs text-blue-100 text-center mt-2 px-2">Duration of Course 4 Years (2019)</p>
+                        </div>
+                    </div>
                 </div>
-                <!-- Education 3 -->
-                <div class="p-6 card-glow scroll-reveal" style="--delay: 0.2s;">
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">2015 - 2019</p>
-                    <h4 class="text-2xl font-semibold text-blue-400 mt-1 light-mode:text-blue-600">Diploma in Electrical Engineering</h4>
-                    <p class="text-lg font-medium text-white light-mode:text-gray-900 mb-2">Electrical Technology</p>
-                    <p class="text-gray-400 light-mode:text-gray-600">Institute of Engineering & Technology, Rangpur</p>
-                    <p class="text-sm text-green-400 light-mode:text-green-600">Result: 2.99 (Out of 4.00)</p>
+
+                <!-- Education Card 3 -->
+                <div class="spotlight-card scroll-reveal" style="transition-delay: 0.1s">
+                    <div class="spotlight-inner p-10 text-center">
+                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="award" class="text-blue-500 w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-bold  uppercase tracking-widest mb-2">Secondary School Certificate</span>
+                        <h4 class="text-xl text-color-2 font-bold mb-3">Science</h4>
+                        <p class=" text-sm text-color-2 leading-relaxed mb-4">Board Dinajpur</p>
+                        
+                        <div class="mt-auto pt-6 border-t border-white/5 w-full">
+                            <span class="text-color-2 font-bold">Mirzapur High School</span>
+                        </div>
+
+                        <!-- Half Slide-up Overlay -->
+                        <div class="card-overlay">
+                            <h5 class="text-lg font-bold">GPA- 4.67 (Out of 5.00)</h5>
+                            <p class="text-xs text-blue-100 text-center mt-2 px-2">Passing Year 2015</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- 6. Gallery Section (New - [নতুন যোগ করা হয়েছে]) -->
-        <section id="gallery" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
-            <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal" style="--delay: 0s;">
-                <i data-lucide="image" class="inline-block w-8 h-8 mr-3"></i> Gallery
-            </h3>
-            <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Gallery Item 1 -->
-                <div class="card-glow scroll-reveal group overflow-hidden" style="--delay: 0.1s;">
-                    <div class="relative overflow-hidden aspect-video">
-                        <img src="https://placehold.co/600x400/2563EB/FFFFFF?text=Calibration+Work" 
-                             alt="Calibration Service Photo" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">Precision Calibration</h4>
-                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Mechanical and thermal calibration according to ISO 17025 standards.</p>
-                    </div>
-                </div>
-
-                <!-- Gallery Item 2 -->
-                <div class="card-glow scroll-reveal group overflow-hidden" style="--delay: 0.2s;">
-                    <div class="relative overflow-hidden aspect-video">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Textile+Machinery+Service" 
-                             alt="Textile Machine Installation" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">Textile Equipment Setup</h4>
-                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Installation and commissioning of textile testing machinery.</p>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 3 -->
-                <div class="card-glow scroll-reveal group overflow-hidden" style="--delay: 0.3s;">
-                    <div class="relative overflow-hidden aspect-video">
-                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Hands+on+Troubleshooting" 
-                             alt="Electrical Troubleshooting" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">System Troubleshooting</h4>
-                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Hands-on diagnosis of complex mechanical and electrical faults.</p>
-                    </div>
-                </div>
-
-                 <!-- Gallery Item 4 (Spanning for visual interest) -->
-                <div class="card-glow scroll-reveal group overflow-hidden sm:col-span-2 lg:col-span-1" style="--delay: 0.4s;">
-                    <div class="relative overflow-hidden aspect-video">
-                        <img src="https://placehold.co/600x400/EF4444/FFFFFF?text=Professional+Training" 
-                             alt="Seminar/Training Photo" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-xl font-semibold mb-1 text-blue-400 light-mode:text-blue-600">Continuous Learning</h4>
-                        <p class="text-sm text-gray-400 light-mode:text-gray-600">Participating in technical workshops and professional training sessions.</p>
-                    </div>
-                </div>
+       <section id="gallery" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
+            <div class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
+                <h3 class="text-3xl font-black uppercase tracking-widest">
+                    <i data-lucide="image" class="inline-block w-8 h-8 mr-3"></i> Gallery
+                </h3>
                 
             </div>
+
+            <div class="gallery-container">
+                <div class="gallery-track">
+                    <!-- Gallery Item 1 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/Qt3dgxF9/1654107820516.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Bangladesh Accreditation Board (BAB), Ministry of Industry</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">38th Understanding Training Course On ISO/IEC 17025-2017</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/xdrfYT39/1674196662501.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Certificate of Perticipation on ISO/ISE 17025:2017 (BAB)</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Bangladesh Accreditation Board (BAB), Ministry of Industries.</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/ZnDmQT5H/1674196717500.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Technical Training Course for Calibration on Mechanical, Electro Technical, Thermal Instruments</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">ISO/IEC 17025:2017, Eastern Calibrators, 58/3, Prince Anwar Shah Rd, Kolkata, India.</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/5tqVV5tY/1674196840765.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Course in Computer Office Application</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Have a good Work knowledge and experience on The national Standard Basic (360Hrs.) 6 Month Course in Computer Office Application.</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/WpfPT1sg/1756698828124.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">(NTVQF) Level- 1</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Have a good Work knowledge and experience on Solar Electrical System under National Technical & Vocational Qualification Frame Work (NTVQF) Level- 1</p>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate for Infinity effect -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/Qt3dgxF9/1654107820516.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Bangladesh Accreditation Board (BAB), Ministry of Industry</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">38th Understanding Training Course On ISO/IEC 17025-2017</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/xdrfYT39/1674196662501.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Certificate of Perticipation on ISO/ISE 17025:2017 (BAB)</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Bangladesh Accreditation Board (BAB), Ministry of Industries.</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/ZnDmQT5H/1674196717500.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Technical Training Course for Calibration on Mechanical, Electro Technical, Thermal Instruments</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">ISO/IEC 17025:2017, Eastern Calibrators, 58/3, Prince Anwar Shah Rd, Kolkata, India.</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/5tqVV5tY/1674196840765.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">Course in Computer Office Application</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Have a good Work knowledge and experience on The national Standard Basic (360Hrs.) 6 Month Course in Computer Office Application.</p>
+                        </div>
+                    </div>
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item">
+                        <img src="https://i.postimg.cc/WpfPT1sg/1756698828124.jpg" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2">(NTVQF) Level- 1</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Have a good Work knowledge and experience on Solar Electrical System under National Technical & Vocational Qualification Frame Work (NTVQF) Level- 1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- 6. Gallery Section (New - [নতুন যোগ করা হয়েছে]) শেষ -->
 
         <!-- 6. Contact Section (Updated) -->
         <section id="contact" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
