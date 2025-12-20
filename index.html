@@ -760,15 +760,23 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(calc(-332px * 5)); } /* width + margin * half of total items */
         }
-
-
-        
-
-
-
-        
+        .footer-link {
+            color: #ffffff;      /* তোমার theme অনুযায়ী change করতে পারো */
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+        .footer-link:hover {
+            color: #77faea;
+            text-shadow: 0 0 8px rgba(124, 124, 255, 0.8);
+        }
     </style>
+
+
+
 </head>
+
+
 <body>
     <div class="bg-gradient-layer"></div>
   
@@ -1390,7 +1398,15 @@
     <!-- Footer -->
     <footer class="bg-gray-900 border-t border-gray-800 mt-16 light-mode:bg-white light-mode:border-gray-300 transition duration-300">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-400 light-mode:text-gray-600">
-            <p>&copy; 2025 All rights reserved | SHAH JALAL SHAKIL </p>
+            <p>&copy; 2025 All rights reserved | 
+                Crafted with Care by 
+                <a href="https://www.linkedin.com/in/md-shah-jamil-sifat/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="footer-link">
+                 Shahjamil
+                </a>
+            </p>
         </div>
     </footer> 
     
