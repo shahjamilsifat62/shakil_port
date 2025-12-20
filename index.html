@@ -9,7 +9,15 @@
     <!-- Load Lucide Icons (type="module" removed for better compatibility) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+    (function(){
+        emailjs.init("0ywMNifcLidlNSxHM");
+        })();
+    </script>
+
     
+
     <style>
         
         /* Define color variables for both themes */
@@ -59,7 +67,7 @@
             --bg-gradient-end: #b4eff9;
             --spotlight-color: rgba(0, 255, 170, 0.215);
             --spotlight-size: 400px;
-            --text-color-2: #4F2FAD;
+            --text-color-2: #131216;
             --nav-button-bg:#cacaca;
             
 
@@ -1300,34 +1308,16 @@
                 <div class="spotlight-card scroll-reveal" style="--delay: 0.2s;">
                     <div class="spotlight-content">
                         <h4 class="text-3xl font-bold mb-6 gradient-text">Send a Message</h4>
-                    
-                         <form id="contact-form" class="space-y-4">
-                        <!-- Name Input -->
-                        <div>
-                            <label for="name" class="block text-sm font-medium mb-1">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your Name" class="contact-input">
-                        </div>
-                        
-                        <!-- Email Input -->
-                        <div>
-                            <label for="email" class="block text-sm font-medium mb-1">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="contact-input">
-                        </div>
-
-                        <!-- Message Input -->
-                        <div>
-                            <label for="message" class="block text-sm font-medium mb-1">Message</label>
-                            <textarea id="message" name="message" rows="4" required placeholder="How can I help you?" class="contact-input"></textarea>
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <button type="submit" class="w-full inline-flex items-center justify-center btn-glow-gradient text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-xl">
-                            Ping Me <i data-lucide="send" class="w-5 h-5 ml-2"></i>
-                        </button>
-
-                        <!-- Message Status Display -->
-                        <div id="form-status" class="mt-4 p-3 rounded text-sm hidden"></div>
-                         </form>
+                        <form id="contact-form" class="space-y-4">
+                            <input type="text" id="name" name="from_name" required placeholder="Full Name" class="contact-input">
+                            <input type="email" id="email" name="reply_to" required placeholder="Email Address" class="contact-input">
+                            <textarea id="message" name="message" required rows="4" placeholder="Your Message" class="contact-input"></textarea>
+                            <button type="submit" id="submit-btn" class="w-full text-white btn-glow-gradient font-semibold py-4 rounded-lg flex justify-center items-center transition">
+                                <span id="btn-text">Ping Me</span>
+                                <i data-lucide="send" class="w-5 h-5 ml-2"></i>
+                            </button>
+                            <p id="form-msg" class="mt-4 text-center hidden"></p>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1353,11 +1343,11 @@
                     <!-- Icons Container (Slides in/appears on hover) -->
                     <div class="flex space-x-4 px-4 items-center h-16 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
                         <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/in/md-shah-jalal-mia-1a2b3c4d/" target="_blank" class="text-gray-400 hover:text-blue-400 light-mode:hover:text-blue-600 transition hover:scale-110" title="LinkedIn">
+                        <a href="https://www.linkedin.com/in/md-shahjalal-shakil/" target="_blank" class="text-gray-400 hover:text-blue-400 light-mode:hover:text-blue-600 transition hover:scale-110" title="LinkedIn">
                             <i data-lucide="linkedin" class="w-6 h-6"></i>
                         </a>
                         <!-- WhatsApp -->
-                        <a href="https://wa.me/+8801705864333" target="_blank" class="text-gray-400 hover:text-green-400 light-mode:hover:text-green-600 transition hover:scale-110" title="WhatsApp">
+                        <a href="https://wa.me/+8801640327275" target="_blank" class="text-gray-400 hover:text-green-400 light-mode:hover:text-green-600 transition hover:scale-110" title="WhatsApp">
                             <i data-lucide="message-square" class="w-6 h-6"></i>
                         </a>
                         <!-- Email -->
@@ -1365,7 +1355,7 @@
                             <i data-lucide="at-sign" class="w-6 h-6"></i>
                         </a>
                         <!-- Facebook -->
-                        <a href="https://www.facebook.com/MdShahJalalMia/" target="_blank" class="text-gray-400 hover:text-blue-700 light-mode:hover:text-blue-800 transition hover:scale-110" title="Facebook">
+                        <a href="https://www.facebook.com/shahjalal.shakil.2025" target="_blank" class="text-gray-400 hover:text-blue-700 light-mode:hover:text-blue-800 transition hover:scale-110" title="Facebook">
                             <i data-lucide="facebook" class="w-6 h-6"></i>
                         </a>
                         <!-- Scroll to Contact -->
@@ -1402,78 +1392,41 @@
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-400 light-mode:text-gray-600">
             <p>&copy; 2025 All rights reserved | SHAH JALAL SHAKIL </p>
         </div>
-    </footer>
-
-    <!-- Firebase and Contact Form Script -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-        const firebaseConfig = {
-            apiKey: "AIzaSyAb1UewIexTLe3MO3Omhofuwqt9hkn2vxo",
-            authDomain: "shakilportfolio-8e1bb.firebaseapp.com",
-            projectId: "shakilportfolio-8e1bb",
-            storageBucket: "shakilportfolio-8e1bb.firebasestorage.app",
-            messagingSenderId: "977196919812",
-            appId: "1:977196919812:web:b6557cd177d414ff1f1951",
-            measurementId: "G-PWRDPWM5JS"
-        };
-        const app = initializeApp(firebaseConfig)
-        const analytics = getAnalytics(app);
-        let db, auth;
-
-        if (finalConfig.apiKey) {
-            const app = initializeApp(finalConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            signInAnonymously(auth).catch(err => console.error("Firebase Auth Error:", err));
-        }
-
-        const form = document.getElementById('contact-form');
-        const btn = document.getElementById('submit-btn');
-        const btnText = document.getElementById('btn-text');
-        const statusMsg = document.getElementById('form-msg');
-
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            
-            if (!db) {
-                alert("Please update your Firebase Config in the code first!");
-                return;
-            }
-
-            btn.disabled = true;
-            btnText.textContent = "Sending...";
-
-            try {
-                // messages will be saved in 'messages' collection
-                const colRef = collection(db, 'messages');
-                await addDoc(colRef, {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    message: document.getElementById('message').value,
-                    timestamp: serverTimestamp()
-                });
-
-                statusMsg.textContent = "Success! Message sent to Firestore.";
-                statusMsg.className = "mt-4 text-center text-green-400";
-                statusMsg.classList.remove('hidden');
-                form.reset();
-            } catch (err) {
-                console.error(err);
-                statusMsg.textContent = "Error: Could not send message.";
-                statusMsg.className = "mt-4 text-center text-red-400";
-                statusMsg.classList.remove('hidden');
-            } finally {
-                btn.disabled = false;
-                btnText.textContent = "Send Message";
-            }
-        };
-
-    </script>
+    </footer> 
+    
 
     <!-- RESTORED: JavaScript for Scroll Animation, Theme Toggle, Form Handling, and Circular Text -->
     <script>
+       
+
+        const form = document.getElementById("contact-form");
+        const msg = document.getElementById("form-msg");
+        const btnText = document.getElementById("btn-text");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            btnText.innerText = "Sending...";
+            msg.classList.add("hidden");
+
+            emailjs.sendForm("service_c4r00t7","template_w2mm2gn",this).then(
+                function () {
+                    btnText.innerText = "Send Message";
+                    msg.innerText = "Message sent successfully ✅";
+                    msg.classList.remove("hidden");
+                    msg.classList.add("text-green-400");
+                    form.reset();
+                },
+                function (error) {
+                    btnText.innerText = "Send Message";
+                    msg.innerText = "Failed to send message ❌";
+                    msg.classList.remove("hidden");
+                    msg.classList.add("text-red-400");
+
+                    console.log(error);
+                }
+            );
+        });
         
 
 
