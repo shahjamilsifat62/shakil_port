@@ -31,93 +31,75 @@
             --border-color: #dfe2e7;
             --dot-color: #4b4ef3;
             --dot-border: #92beff;
-            /* Neumorphism specific shadows (Dark Mode) */
             --neumorph-inset-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(45, 45, 45, 0.2);
             --neumorph-lift-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(45, 45, 45, 0.2);
-            --gradient-start: #6EE7B7; /* Emerald 300 (হালকা সবুজ) */
-            --gradient-end: #3B82F6;  /* Blue 500 (উজ্জ্বল নীল) */
-            --bg-gradient-start: #100c1f; /* Darker Blue-Gray (almost black) */
+            --gradient-start: #6EE7B7; 
+            --gradient-end: #3B82F6;  
+            --bg-gradient-start: #100c1f;
             --bg-gradient-end: #081f2c;
             --spotlight-color: rgba(59, 131, 246, 0.177);
             --spotlight-size: 400px;
             --text-color-2: #00eaff;
             --nav-button-bg: rgba(17, 24, 39, 0.7);
             --card-gradientbg: rgba(17, 24, 39, 0.7);
-           
-            
-
         }
 
         body.light-mode {
-            /* Light Mode Overrides */
-            --bg-color: #caebfb; /* Light gray background */
-            --text-color: #000000; /* Dark text */
-            --card-bg: #f3f4f6; /* Semi-transparent white card background */
+            --bg-color: #caebfb; 
+            --text-color: #000000; 
+            --card-bg: #f3f4f6; 
             --primary-color: #4b749f;
-            --icon-color:black; /* White card background */
+            --icon-color:black; 
             --border-color: #4b5054;
-            --dot-color: #000909; /* Light gray border */
-            --dot-border: #00000098; /* Matches light background */
-            /* Neumorphism specific shadows (Light Mode) */
+            --dot-color: #000909; 
+            --dot-border: #00000098;
             --neumorph-inset-shadow: inset 5px 5px 5px #a1a1a1, inset -5px -5px 5px #ffffff;
             --neumorph-lift-shadow: 4px 4px 10px #8f8f8f, -4px -4px 10px #ffffff;
-            --gradient-start: #243748; /* Indigo 600 */
-            --gradient-end: #4b749f;  /* Violet 600 */
-            --bg-gradient-start: #ddfbf8; /* Very Light Gray */
+            --gradient-start: #243748; 
+            --gradient-end: #4b749f;  
+            --bg-gradient-start: #ddfbf8; 
             --bg-gradient-end: #b4eff9;
             --spotlight-color: rgba(0, 255, 170, 0.215);
             --spotlight-size: 400px;
             --text-color-2: #131216;
-            --nav-button-bg:#cacaca;
-            
-
-            
-            
-            
+            --nav-button-bg:#cacaca;    
         }
+
         .text-color-2 {
             color: var(--text-color-2);
         }
-        
-        
-       
 
-        /* Apply CSS variables universally */
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            /* ADDED: Smooth scrolling for better UX */
             scroll-behavior: smooth;
             transition: background-color 0.6s ease, color 0.4s ease;
         }
 
-        /* ADDED: Ensures body overflow is hidden when mobile menu is open */
         body.menu-open {
             overflow: hidden;
         }
 
-        /* Background Gradient Layer */
         .bg-gradient-layer {
-            position: fixed; /* Screen scroll korleo eita fixed thakbe */
+            position: fixed; 
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2; /* Sob kichur niche thakbe */
+            z-index: -2;
             pointer-events: none;
             background-color: #030712;
-            /* Apnar requested radial gradient code */
             background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120, 119, 198, 0.3), rgba(255, 255, 255, 0));
         }
         
         body.light-mode .bg-gradient-layer {
-            position: fixed; /* Screen scroll korleo eita fixed thakbe */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2; /* Sob kichur niche thakbe */
+            z-index: -2; 
             pointer-events: none;
             background-color: #d1e1e4;
             background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(193, 225, 247, 0.214), rgba(202, 243, 248, 0.345));
@@ -128,12 +110,11 @@
             background-color: var(--bg-gradient-start);
             border-radius: 1rem; 
             padding: 1px; 
-            overflow: visible; /* Shadow jeno baire dekha jay */
+            overflow: visible; 
             z-index: 1;
             transition: transform 0.3s ease;
         }
 
-        /* Moving spotlight layer for Border */
         .spotlight-glow {
             position: absolute;
             top: 0;
@@ -153,7 +134,6 @@
             pointer-events: none;
         }
 
-        /* Outer Glow Shadow Effect */
         #about-container::before {
             content: '';
             position: absolute;
@@ -176,7 +156,6 @@
             opacity: 1;
         }
 
-        /* Inner Content Box */
         .about-content-inner {
             background-image: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
             border-radius: 1rem;
@@ -189,13 +168,12 @@
             position: relative;
             background-color: var(--card-bg); 
             border-radius: 23px;
-            padding: 1.5px; /* বর্ডারের জন্য জায়গা */
+            padding: 1.5px; 
             overflow: hidden;
             transition: transform 0.3s ease;
             box-shadow: #00000033 0px 4px 6px -1px, #0000001a 0px 2px 4px -1px;
         }
 
-        /* কার্সার যেখানে থাকবে সেই বর্ডারটুকু উজ্জ্বল হবে */
         .spotlight-card::before {
             content: "";
             position: absolute;
@@ -214,7 +192,6 @@
             opacity: 1;
         }
 
-        /* কার্ডের ভিতরের কন্টেন্ট (যা বর্ডার ঢেকে দিবে না) */
         .spotlight-content {
             position: relative;
             z-index: 1;
@@ -243,14 +220,13 @@
             height: 100%;
             overflow: hidden;
         }
-        /* Spotlight on Text */
         .spotlight-text {
             position: relative;
             font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -0.05em;
-            color:rgba(255, 255, 255, 0.1); /* Default low opacity */
+            color:rgba(255, 255, 255, 0.1); 
             background: radial-gradient(
                 200px circle at var(--mouse-x-inner, 0) var(--mouse-y-inner, 0),
                 var(--primary-color) 0%,
@@ -275,10 +251,10 @@
         }
         .card-overlay {
             position: absolute;
-            bottom: -100%; /* Shuru te niche thakbe */
+            bottom: -100%; 
             left: 0;
             width: 100%;
-            height: 30%; /* Card er ordhek height */
+            height: 30%; 
             background: linear-gradient(to top, var(--gradient-start), var(--gradient-end));
             display: flex;
             flex-direction: column;
@@ -292,20 +268,17 @@
             box-shadow: 0 -10px 20px rgba(0,0,0,0.2);
         }
 
-        /* Hover korle 50% niche overlay ta theme jabe, jate nicher part dekha jay */
         .spotlight-card:hover .card-overlay {
             bottom: 70%; 
         }
-        
-        /* --- HIGHLIGHT: থিম বাটনকে গোলাকার করার জন্য CSS পরিবর্তন --- */
+
         #theme-toggle-desktop, #theme-toggle-mobile {
-            /* HIGHLIGHT: বাটনটিকে নিখুঁত বৃত্ত (perfect circle) তৈরি করা হয়েছে */
             width: 36px;
             height: 36px;
             position: relative;
             background-color: var(--nav-button-bg); 
             border: 1px solid var(--border-color); 
-            border-radius: 50%; /* HIGHLIGHT: বৃত্তাকার শেপ */
+            border-radius: 50%; 
             padding: 0; 
             display: flex; 
             justify-content: center;
@@ -315,7 +288,6 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
         }
 
-        /* HIGHLIGHT: পুরানো ব্যাকগ্রাউন্ড কালার এবং ট্রান্সলেশনাল স্টাইলগুলি মুছে ফেলা হয়েছে */
         body:not(.light-mode) #theme-toggle-desktop,
         body:not(.light-mode) #theme-toggle-mobile {
             background-color: var(--card-bg);
@@ -327,7 +299,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: none; /* নো ট্রান্সলেশন ট্রানজিশন */
+            transition: none; 
         }
         
         .switch-icon-container.light,
@@ -335,26 +307,22 @@
             transform: none;
             background-color: transparent;
         }
-        
-        /* Ensure icon size is correct */
+
         .switch-icon-container i {
              width: 20px;
              height: 20px;
         }
 
-
-        /* HIGHLIGHT: বাউন্স সহ আইকনের জন্য নতুন রোটেশন অ্যানিমেশন */
         @keyframes spin-360 {
             0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(0.8); opacity: 0.7; } /* মাঝখানে বাউন্স */
+            50% { transform: rotate(180deg) scale(0.8); opacity: 0.7; } 
             100% { transform: rotate(360deg) scale(1); }
         }
 
         .switch-icon-container.spin-active {
-            /* HIGHLIGHT: বাউন্সি রোটেশন ট্রানজিশন যোগ করা হয়েছে */
             animation: spin-360 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
         }
-        /* Animation for the button click feedback */
+
         @keyframes toggle-pulse-spin {
             0% { transform: rotate(0deg) scale(1); }
             50% { transform: rotate(180deg) scale(1.15); border-color: #3B82F6; } 
@@ -365,10 +333,7 @@
             animation: toggle-pulse-spin 0.6s ease-in-out;
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
         }
-        /* ------------------------------------- */
 
-       
-        /* Custom glow effect on buttons/cards - Color depends on theme, background uses variable */
         .card-glow {
             background-color: var(--card-bg); 
             backdrop-filter: blur(8px); 
@@ -383,7 +348,6 @@
         }
         
         body.light-mode .card-glow:hover {
-            /* Light Mode Glow */
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
@@ -395,20 +359,17 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* [UPDATED] Apply Gradient Background to About Section */
         #about-container {
-            /* Use a diagonal gradient with the new background variables */
             background-image: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
             border-radius: 1rem; 
-            box-shadow: 0;/* Deeper shadow for elevation */
+            box-shadow: 0;
             transition: all 0.6s ease;
         }
+
         body.light-mode #about-container {
-             /* Soften the shadow in light mode */
              box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05); 
         }
 
-        /* Custom styling for timeline dots/lines using variables */
         .timeline-item {
             position: relative;
             padding-left: 2rem;
@@ -422,18 +383,15 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background-color: var(--dot-color); /* Blue dot */
+            background-color: var(--dot-color); 
             border: 3px solid var(--dot-border);
         }
 
-        /* Sticky header background using variable */
         .header-bg {
             background-color: var(--bg-color);
         }
 
-        /* --- Circular FAB and Text Styling --- */
         .circular-fab {
-            /* Define overall container size (Diameter of the text circle) */
             width: 150px;
             height: 150px;
             position: relative;
@@ -442,12 +400,10 @@
             justify-content: center;
         }
 
-        /* Inner rotating text wrapper */
         #circular-text-display {
             position: absolute;
             width: 100%;
             height: 100%;
-            /* Animation for continuous slow spin */
             animation: rotate 15s linear infinite;
             text-transform: uppercase;
             font-weight: 500;
@@ -455,25 +411,21 @@
             letter-spacing: 0.5px;
         }
 
-        /* Individual letter positioning */
         #circular-text-display span {
             position: absolute;
             left: 50%;
-            /* Center of rotation (75px is the radius of the 150px container) */
             transform-origin: 0 75px; 
-            height: 75px; /* Radius */
+            height: 75px; 
             top: 0;
-            padding-left: 2px; /* Slight spacing between characters */
+            padding-left: 2px;
             font-weight: 700;
         }
-        
-        /* Keyframes for rotation */
+
         @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        /* Main 'Hire Me' button styling (FAB) - ENHANCED HOVER EFFECT */
         .fab-glow {
             background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)) !important;
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
@@ -513,8 +465,7 @@
             z-index: 10; 
             position: relative; 
         }
-        
-        /* Input styling fix */
+
         .contact-input {
             width: 100%;
             padding: 0.75rem;
@@ -530,8 +481,6 @@
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
         }
 
-
-         /* Custom CSS for scroll animation effects */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -542,9 +491,8 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* --- Vertical Text Slider (v-slider) CSS --- */
+
         .v-slider {
-            /* Height must match the line height of the surrounding text (3xl) */
             height: 1.2em; 
             overflow: hidden;
             display: inline-block;
@@ -555,7 +503,6 @@
 
         .v-slider__words {
             display: inline-block;
-            /* 2 words * 2s hold = 4s total animation time */
             animation: slide 6s infinite;
             position: relative;
             top: 0;
@@ -563,12 +510,10 @@
 
         .v-slider__words span {
             display: block;
-            /* Use the primary color for the sliding text */
             color: #3B82F6; 
             height: 1.2em;
         }
 
-        /* Keyframes for the slide animation (2s hold per word) */
         @keyframes slide {
             0% { transform: translateY(0); } 
             45% { transform: translateY(0); } /* Hold "Service" for 2s */
@@ -576,15 +521,13 @@
             95% { transform: translateY(-1.2em); } /* Hold "Calibration" for 2s */
             100% { transform: translateY(0); } /* Transition back to "Service" */
         }
-        
-        /* START HIGHLIGHT: CUSTOM CSS for SLIDER HOVER BUTTON */
+
         .social-slider-container {
             max-width: 100%; /* Ensure it respects parent width */
             transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Custom cubic-bezier for smooth slide */
             border-radius: 0.5rem; /* rounded-lg */
         }
-        
-        /* Fix for mobile/small screen widths */
+
         @media (max-width: 768px) {
             .social-slider-container {
                 /* On small screens, limit max expansion to 90% of screen width */
@@ -594,19 +537,16 @@
                  width: 90vw;
             }
         }
-       /* ------------------------------------------- */
-        /* --- REWRITTEN NAVIGATION ICON BUTTON EFFECT --- */
-        /* --- FIX: Increased delay on text entry (0.25s) to guarantee icon exit (0.2s) first. --- */
-        /* ------------------------------------------- */
+
         .nav-icon-button {
             display: flex;
             align-items: center;
             justify-content: center; 
             height: 36px;
-            width: 36px; /* Initial fixed width for icon only */
+            width: 36px;
             padding: 0; 
             border-radius: 9999px; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Controls the width expansion */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             color: var(--text-color);
             background-color: var(--nav-button-bg); 
             overflow: hidden; 
@@ -615,62 +555,54 @@
             box-shadow: var(--neumorph-lift-shadow);
             position: relative; 
         }
-        
-        /* Icon Styling: Positioned absolutely, centered, visible by default */
+
         .nav-icon {
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) scale(0.8); /* Initial state: Centered, full size */
+            transform: translate(-50%, -50%) scale(0.8); 
             opacity: 1;
             z-index: 30; 
-            transition: opacity 0.15s ease, transform 0.2s ease; /* Fast transition for exit */
+            transition: opacity 0.15s ease, transform 0.2s ease; 
         }
 
-        /* Text Label Styling: Centered in theory, but pushed left to hide outside 36px button */
         .nav-icon-button .icon-label {
             position: absolute; 
-            left: 50%; /* Center anchor point */
+            left: 50%; 
             top: 50%;
-            transform: translate(-50%, -50%); /* Centers the text relative to its anchor */
-            margin-left: -50px; /* Pushes the label aggressively left, out of the 36px viewport */
+            transform: translate(-50%, -50%); 
+            margin-left: -50px; 
             opacity: 0; 
-            z-index: 20; /* Lower Z-index than icon */
+            z-index: 20; 
             font-size: 0.875rem; 
             font-weight: 500; 
-            /* Base state: No delay needed */
             transition: opacity 0.3s ease, margin-left 0.3s ease; 
         }
 
-        /* HOVER EFFECTS: Expands, lifts shadow, hides icon, shows text */
         .nav-icon-button:hover {
-            width: 120px; /* Expanded width */
+            width: 120px; 
             color: var(--icon-color); 
             box-shadow: var(--neumorph-lift-shadow);
             transform: scale(1.02); 
         }
         
-        /* On Hover: Icon disappears quickly */
         .nav-icon-button:hover .nav-icon {
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5); /* Shrinks and fades */
-            transition: opacity 0.15s ease, transform 0.2s ease; /* Immediate start, fast finish */
+            transform: translate(-50%, -50%) scale(0.5); 
+            transition: opacity 0.15s ease, transform 0.2s ease; 
         }
 
-        /* On Hover: Text moves into the actual center and appears */
         .nav-icon-button:hover .icon-label {
             opacity: 1; 
-            margin-left: 0; /* Moves back to center anchor */
-            /* *** CRITICAL FIX: Add 0.25s delay to both opacity and margin-left transitions *** */
+            margin-left: 0; 
             transition: opacity 0.3s ease 0.25s, ease 0.25s;
         }
-        /* ------------------------------------------- */
-         /* ACTIVE/FOCUS EFFECTS: Button is pressed down (inset shadow for tap effect) */
+
         .nav-icon-button:active,
         .nav-icon-button:focus {
-            box-shadow: var(--neumorph-inset-shadow); /* Use inset shadow to make it look pressed */
-            transform: scale(0.98); /* Slightly shrink for deeper press feel */
-            outline: none; /* Remove default browser outline */
+            box-shadow: var(--neumorph-inset-shadow); 
+            transform: scale(0.98);
+            outline: none;
             color: var(--icon-color);
         }
 
@@ -682,8 +614,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible;
         }
-        
-        /* Secondary variant (outline style but with glow) */
+
         .btn-glow-gradient-outline {
             position: relative;
             z-index: 1;
@@ -732,7 +663,7 @@
 
         .gallery-track {
             display: flex;
-            width: calc(250px * 10); /* Adjust based on item width and count */
+            width: calc(250px * 10); 
             animation: scroll 40s linear infinite;
         }
 
@@ -758,10 +689,10 @@
 
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-332px * 5)); } /* width + margin * half of total items */
+            100% { transform: translateX(calc(-332px * 5)); } 
         }
         .footer-link {
-            color: #ffffff;      /* তোমার theme অনুযায়ী change করতে পারো */
+            color: #ffffff;      
             text-decoration: none;
             font-weight: 500;
             transition: 0.3s ease;
@@ -787,7 +718,7 @@
                 <a href="#" class="text-2xl font-bold gradient-text">Shahjalal Shakil</a>
                 
                 
-                <!-- UPDATED: DESKTOP Nav Links and Theme Toggle (Visible on md and above) -->
+                <!-- DESKTOP Nav Links and Theme Toggle (Visible on md and above) -->
                 <div class="hidden md:flex items-center space-x-3">
                     <!-- Navigation links are now icons with Neumorphism button effects and text reveal on hover -->
                     <a href="#about" class="nav-icon-button" title="Profile">
@@ -827,7 +758,7 @@
                     </button>
                 </div>
                 
-                <!-- RESTORED: Mobile Menu Toggle and Theme Toggle -->
+                <!--  Mobile Menu Toggle and Theme Toggle -->
                 <div class="flex items-center md:hidden">
                     <!-- Theme Toggle Button (Mobile) - Now Round -->
                     <button id="theme-toggle-mobile" class="focus:outline-none" title="Toggle Theme">
@@ -835,7 +766,7 @@
                             <i data-lucide="sun" class="w-4 h-4 text-gray-400 light-mode:text-yellow-600" id="theme-icon-mobile"></i>
                         </div>
                     </button>
-                    <!-- ADDED: Menu Button -->
+                    <!--  Menu Button -->
                     <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-700 light-mode:hover:bg-gray-200 transition ml-2">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
@@ -845,7 +776,7 @@
     </header>
 
 
-    <!-- ADDED: Mobile Menu Overlay (Off-Canvas Menu) -->
+    <!--  Mobile Menu Overlay (Off-Canvas Menu) -->
     <div id="mobile-menu" class="fixed inset-y-0 left-0 z-[100] transform -translate-x-full w-64 transition-transform duration-300 md:hidden shadow-2xl" style="background-color: var(--card-bg);">
         <div class="h-full flex flex-col">
             <!-- Menu Header -->
@@ -857,7 +788,6 @@
             </div>
             <!-- Menu Links -->
             <div class="flex flex-col p-4 space-y-2 flex-grow overflow-y-auto">
-                <!-- UPDATED: Added class 'mobile-nav-link' for JS handling -->
                 <a href="#about" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Profile</a>
                 <a href="#skills" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Capabilities</a>
                 <a href="#experience" class="mobile-nav-link text-lg font-medium hover:text-blue-400 transition py-3 px-2 rounded-md">Journey</a>
@@ -877,7 +807,6 @@
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <!-- 1. About Me Section -->
         <section id="about" class="py-16 md:py-24 flex flex-col md:flex-row items-center gap-12 text-center md:text-left scroll-reveal" style="--delay: 0s;">
-            <!-- Container with Spotlight Effect -->
             <div id="about-container" class="rounded-2xl shadow-xl p-8 md:p-12 scroll-reveal" style="--delay: 0s;">
                 <div class="spotlight-glow"></div> 
                 <div class="about-content-inner p-8 md:p-16">
@@ -1077,7 +1006,6 @@
                         <i data-lucide="lock" class="text-blue-500 w-8 h-8"></i>
                     </div>
                     
-                    <!-- THE SPOTLIGHT TEXT -->
                     <h2 class="spotlight-text flex text-center justify-center">Coming Soon!</h2>
                     
                     <p class="text-white-500 light-mode:text-black-800 font-medium mt-6 text-center max-sm">
@@ -1173,7 +1101,7 @@
             </div>
         </section>
 
-        <!-- 6. Gallery Section (New - [নতুন যোগ করা হয়েছে]) -->
+        <!-- 6. Gallery Section  -->
        <section id="gallery" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
             <div class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
                 <h3 class="text-3xl font-black uppercase tracking-widest">
@@ -1269,7 +1197,7 @@
             </div>
         </section>
 
-        <!-- 6. Contact Section (Updated) -->
+        <!-- 6. Contact Section  -->
         <section id="contact" class="py-16 border-t border-gray-800 light-mode:border-gray-300">
             <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
                 <i data-lucide="mail" class="inline-block w-8 h-8 mr-3"></i> Get In Touch
@@ -1330,7 +1258,7 @@
                 </div>
             </div>
         </section>
-           <!-- 7. Social Buttons Section (Updated with Slider Hover Effect) -->
+           <!-- 7. Social Buttons Section Slider Hover Effect -->
         <section id="social" class="py-12 border-t border-gray-800 light-mode:border-gray-300">
             <h3 class="text-4xl font-bold mb-12 text-center gradient-text scroll-reveal">
                 <i data-lucide="share-2" class="inline-block w-8 h-8 mr-3"></i> Connect with Me
@@ -1340,13 +1268,9 @@
             <div class="flex justify-center scroll-reveal group" style="--delay: 0.1s;">
                 <!-- Main button/container that expands. Custom max-width for responsiveness -->
                 <div class="flex items-center rounded-lg shadow-2xl card-glow overflow-hidden social-slider-container w-16 group-hover:w-[280px] md:group-hover:w-96 transition-all duration-500 ease-in-out" style="background-color: var(--card-bg); border-color: var(--border-color);">
-                    
-                   <!-- START HIGHLIGHT: Navigation fix. Changed <a> to <button> and removed href. -->
-                    <!-- 'Connect' Icon/Button (Always Visible) -->
                     <button type="button" class="w-16 h-16 flex items-center justify-center btn-glow-gradient text-white font-bold flex-shrink-0 transition-colors duration-300 group-hover:bg-blue-700 hover:scale-105 focus:outline-none" title="Connect">
                         <i data-lucide="move-right" class="w-6 h-6"></i>
                     </button>
-                    <!-- END HIGHLIGHT: Navigation fix. Changed <a> to <button> and removed href. -->
                     
                     <!-- Icons Container (Slides in/appears on hover) -->
                     <div class="flex space-x-4 px-4 items-center h-16 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
@@ -1373,7 +1297,6 @@
                     </div>
                 </div>
             </div>
-            <!-- END HIGHLIGHT: SLIDER HOVER BUTTON STRUCTURE -->
         </section>
 
     </main>
@@ -1411,7 +1334,7 @@
     </footer> 
     
 
-    <!-- RESTORED: JavaScript for Scroll Animation, Theme Toggle, Form Handling, and Circular Text -->
+    <!--  JavaScript for Scroll Animation, Theme Toggle, Form Handling, and Circular Text -->
     <script>
        
 
@@ -1441,6 +1364,7 @@
 
                     console.log(error);
                 }
+                
             );
         });
         
@@ -1452,7 +1376,6 @@
                 const rect = aboutContainer.getBoundingClientRect();
                 const x = ((e.clientX - rect.left) / rect.width) * 100;
                 const y = ((e.clientY - rect.top) / rect.height) * 100;
-                // CSS variable update for both border and shadow
                 aboutContainer.style.setProperty('--mouse-x', `${x}%`);
                 aboutContainer.style.setProperty('--mouse-y', `${y}%`);
             });
@@ -1531,14 +1454,12 @@
 
             const containersToSpin = [switchIconContainerDesktop, switchIconContainerMobile].filter(e => e);
 
-            // HIGHLIGHT: রোটেশন অ্যানিমেশন ট্রিগার করার জন্য JS লজিক শুরু
             // 1. Rotation Animation শুরু করুন
             containersToSpin.forEach(container => {
-                // 'spin-active' ক্লাস যোগ করুন যা CSS অ্যানিমেশন ট্রিগার করবে
+                // 'spin-active'
                 container.classList.add('spin-active');
             });
             
-            // 2. থিম স্টেট আপডেট করুন
             if (newIsLightMode) {
                 body.classList.add('light-mode');
                 localStorage.setItem('theme', 'light');
@@ -1547,13 +1468,10 @@
                 localStorage.setItem('theme', 'dark');
             }
             
-            // 500ms অপেক্ষা করুন (CSS অ্যানিমেশন এবং ট্রানজিশনের সময়কাল)
+
             setTimeout(() => {
-                // 3. ঘূর্ণন শেষ হওয়ার পরে আইকন আপডেট করুন
                 if (themeIconDesktop) themeIconDesktop.setAttribute('data-lucide', iconName);
                 if (themeIconMobile) themeIconMobile.setAttribute('data-lucide', iconName);
-                
-                // 4. 'spin-active' ক্লাসটি মুছে ফেলুন এবং লুসাইড আইকন পুনরায় তৈরি করুন
                 containersToSpin.forEach(container => {
                     container.classList.remove('spin-active');
                 });
@@ -1562,15 +1480,13 @@
                     lucide.createIcons();
                 }
 
-            }, 500); // 500ms (অ্যানিমেশন স্থায়িত্ব)
-            // HIGHLIGHT: রোটেশন অ্যানিমেশন ট্রিগার করার জন্য JS লজিক শেষ
+            }, 500); 
         }
-        // UPDATED: Attach listeners to both desktop and mobile buttons
+
         if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
         if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
-        // -----------------------------
 
-        // --- ADDED: Mobile Menu Logic---
+        // ------ Mobile Menu Logic---
         const menuToggle = document.getElementById('menu-toggle');
         const closeMenu = document.getElementById('close-menu');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1578,63 +1494,33 @@
 
         function openMenu() {
             mobileMenu.classList.remove('-translate-x-full');
-            document.body.classList.add('menu-open'); // Prevent scrolling background
+            document.body.classList.add('menu-open'); 
         }
 
         function closeMenuHandler() {
             mobileMenu.classList.add('-translate-x-full');
-            document.body.classList.remove('menu-open'); // Restore scrolling
+            document.body.classList.remove('menu-open'); 
         }
 
         if (menuToggle) menuToggle.addEventListener('click', openMenu);
         if (closeMenu) closeMenu.addEventListener('click', closeMenuHandler);
 
-        // ADDED: Close menu when a link is clicked
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', closeMenuHandler);
         });
-        // -----------------------------
-        // --- Contact Form Handling ---
-        const contactForm = document.getElementById('contact-form');
-        const formStatus = document.getElementById('form-status');
 
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            // const message = document.getElementById('message').value; // Unused for demo alert
-
-            // Display a success message (Demo)
-            formStatus.classList.remove('hidden', 'bg-red-400', 'text-red-900', 'bg-green-100', 'text-green-800');
-            formStatus.classList.add('bg-green-500/20', 'text-green-400'); // Tailwind classes for success
-            formStatus.innerHTML = `Message sent successfully! (Demo)<br>Thank you, ${name}. I will contact you at ${email}.`;
-            
-            // Optionally clear the form
-            contactForm.reset();
-
-            // Hide status after a few seconds
-            setTimeout(() => {
-                formStatus.classList.add('hidden');
-            }, 5000);
-        });
-        // -----------------------------
-        
-
-        //  // --- Scroll Animation Logic (Updated for Re-triggering) ---
+        //  --- Scroll Animation Logic  ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // When element enters the viewport, add 'is-visible' (animates in)
                     entry.target.classList.add('is-visible');
                 } else {
-                    // When element leaves the viewport, remove 'is-visible' (resets animation)
+
                     entry.target.classList.remove('is-visible');
                 }
             });
         }, {
-            // Threshold determines how much of the item must be visible
+
             threshold: 0.1, 
             rootMargin: '0px 0px -50px 0px'
         });
@@ -1642,15 +1528,13 @@
         document.querySelectorAll('.scroll-reveal').forEach(element => {
             observer.observe(element);
         });
-        // -----------------------------
+
 
 
         // --- Circular Text FAB Logic ---
         const circularTextElement = document.getElementById('circular-text-display');
-        // Add a dot for better visual separation
         const textToDisplay = "SERVICE & CALIBRATION ENGINEER . ";
         const numCharacters = textToDisplay.length;
-        // Calculate angle needed per character for 360 degrees
         const angleIncrement = 360 / numCharacters; 
         
         if (circularTextElement) {
@@ -1658,31 +1542,22 @@
                 const span = document.createElement('span');
                 span.textContent = char;
                 const rotation = angleIncrement * index;
-                
-                // Rotate the span container around the center (0, 0), with the rotation point 75px down (the radius)
                 span.style.transform = `rotate(${rotation}deg)`;
                 span.style.transformOrigin = `0 75px`; 
                 
                 circularTextElement.appendChild(span);
             });
         }
-        // -----------------------------
 
-
-        // --- General Initializations ---
-        // 1. Initialize Theme first
         initializeTheme();
 
-        // 2. Initialize Lucide Icons
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
 
-        // 3. Simple smooth scrolling for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                // Close menu if it's the mobile menu that triggered the click
                 closeMenuHandler(); 
 
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
@@ -1690,7 +1565,6 @@
                 });
             });
         });
-        // -----------------------------
     </script>
 </body>
 </html>
